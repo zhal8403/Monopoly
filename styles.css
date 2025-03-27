@@ -1,0 +1,187 @@
+/* Main layout container */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Monopoly Board Grid */
+.grid {
+    display: grid;
+    width: 697px;
+    height: 697px;
+    background-color: white;
+    border: 8px solid rgb(55, 132, 183);
+    grid-template-columns: 92px repeat(9, 57px) 92px;
+    grid-template-rows: 92px repeat(9, 57px) 92px;
+}
+
+/* Board spaces */
+.top, .right, .left, .bottom, .corner {
+    display: flex;
+    justify-content: center;
+    border: 1px solid black;
+    font-size: 8px;
+    text-align: center;
+    background-color: rgb(207, 230, 207);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Special corners */
+.corner {
+    background-color: rgb(202, 231, 210);
+    font-size: 12px;
+    font-weight: bold;
+    transform: rotate(180deg);
+}
+
+/* Player token */
+.player-token {
+    width: 30%;
+    height: 30%;
+    background-color: blue;
+    position: absolute;
+    top: 85%;
+    left: 85%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+}
+
+/* Player balances panel */
+.balances {
+    width: 250px;
+    padding: 15px;
+    border: 2px solid black;
+    background-color: #f8f8f8;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.balances h2 {
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    border-bottom: 2px solid black;
+    padding-bottom: 5px;
+}
+
+.player {
+    padding: 10px;
+    font-size: 1.2em;
+    background-color: #d1ecf1;
+    margin: 5px 0;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+/* Dice display */
+.dice-container {
+    text-align: center;
+    font-size: 1.5em;
+    margin-top: 15px;
+}
+
+/* Button */
+.controls {
+    text-align: center;
+    margin-top: 20px;
+}
+
+button {
+    font-size: 1.2em;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+#id2, #id4 {
+    border-bottom-color: indigo;
+    border-bottom-width: 15px;
+}
+
+#id7, #id9, #id10 {
+    border-bottom-color:rgb(219, 169, 237);
+    border-bottom-width: 15px;
+}
+
+#id12, #id14, #id15 {
+    border-left-color:deeppink;
+    border-left-width: 15px;
+}
+
+#id17, #id18, #id20 {
+    border-left-color: orange;
+    border-left-width: 15px;
+}
+
+#id22, #id24, #id25 {
+    border-top-color: red;
+    border-top-width: 15px;
+}
+
+#id30, #id28, #id27 {
+    border-top-color: yellow;
+    border-top-width: 15px;
+}
+
+#id40, #id38 {
+    border-right-color: blue;
+    border-right-width: 15px;
+}
+
+#id32, #id34, #id35 {
+    border-right-color: green;
+    border-right-width: 15px;
+}
+
+.top span{
+    transform: rotate(180deg);
+    padding-top: 5px;
+}
+
+
+.bottom span {
+    padding-top: 5px;
+}
+
+/* Empty center section */
+.center {
+    grid-column: 2 / 11;
+    grid-row: 2 / 11;
+    background-color: rgb(201, 236, 210) ;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid black;
+    position:relative;
+}
+
+.left {
+    display: flex;
+    writing-mode: vertical-rl;
+    text-align: center;
+    padding-right: 5px;
+}
+
+.right {
+    display: flex;
+    writing-mode: vertical-lr; 
+    text-align: center;
+    padding-left: 5px;
+}
+
+#id20 span, #id18 span, #id17 span, #id15 span, #id14 span, #id12 span, #id19 span, #id13 span{
+    transform: rotate(180deg);
+    padding-left: 10px;
+}
+
+#id16 span {
+    transform: rotate(180deg);
+    padding-left: 15px;
+}
+
+#id16 ,#id35{
+    font-size: 7px;
+}
