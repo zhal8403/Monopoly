@@ -14,12 +14,9 @@ class Player
   }
 }
 
-
-
-
 class Property
 {
-  constructor(position, price, rents, housePrice, mortgage)
+  constructor(position, price, rents, housePrice, mortgage, color)
   {
       this.owned = null;
       this.type = "property";
@@ -30,24 +27,24 @@ class Property
       this.housePrice = housePrice;
       this.mortgage = mortgage;
       this.house = 0;
+      this.color = color;
   }
 }
 let turn =1;
 let double = 0;
-
+let house = 32;
+let hotel = 12;
 
 let player1 = new Player(1, "blue");
 let player2 = new Player(2, "red");
 let player3 = new Player(3, "green");
 let player4 = new Player(4, "yellow");
 
-
-
-
 let price = [60, 60, 200, 100, 100, 120, 140, 140, 160, 200, 180, 180, /*utility*/150, 200, 220, 220, 240, 200, 260, 260, /*utility*/150, 280, 300, 300, 320, 200, 350, 400];
 let position = [2, 4, 6, 7, 9, 10, 12, 14, 15, 16, 17, 18, 19, 20, 22, 24, 25, 26, 27, 28, 29, 30, 32, 34, 35, 36, 38, 40];
 let mortgage = [30, 30, 100, 50, 50, 60, 70, 70, 80, 100, 90, 90, 75, 100, 110, 110, 120, 130, 100, 130, 140, 75, 150, 150, 160, 100, 175, 200];
-let housePrices = [50, 50, -1, 50, 50, 50, 100, 100, 100, -1, 100, 100, -1, 100, 150, 150, 150, -1, 150, 150, -1, 150, 200, 200, 200, -1, 200, 200, ];
+let housePrices = [50, 50, -1, 50, 50, 50, 100, 100, 100, -1, 100, 100, -1, 100, 150, 150, 150, -1, 150, 150, -1, 150, 200, 200, 200, -1, 200, 200];
+let color = ["violet", "violet", null, "indigo", "indigo", "indigo", "pink", "pink", "pink", null, "orange", "orange", null, "orange", "red", "red", "red", null, "yellow", "yellow", null, "yellow", "green", "green", "green", null, "blue", "blue"]
 let rents = [
     [2, 10, 30, 90, 160, 250], // Mediterranean Avenue
     [4, 20, 60, 180, 320, 450], // Baltic Avenue
@@ -80,14 +77,10 @@ let rents = [
 ];
 let properties = [];
 
-
-
-
 for (let i = 0; i < 28; i++)
 {
-  properties.push(new Property(position[i], price[i], rents[i], housePrices[i], mortgage[i]));
+  properties.push(new Property(position[i], price[i], rents[i], housePrices[i], mortgage[i], color[i]));
 }
-
 
 function move()
 {
@@ -96,25 +89,17 @@ function move()
       turn--;
   }
 
-
   document.getElementById("player1").style.backgroundColor = "#d1ecf1";
   document.getElementById("player2").style.backgroundColor = "#d1ecf1";
   document.getElementById("player3").style.backgroundColor = "#d1ecf1";
   document.getElementById("player4").style.backgroundColor = "#d1ecf1";
 
-
-
-
   let die1 = Math.floor(Math.random() * 6) + 1;
   let die2 = Math.floor(Math.random() * 6) + 1;
   let rollTotal = die1 + die2;
 
-
   document.getElementById("dice1").src = die1 + ".png";
   document.getElementById("dice2").src = die2 + ".png";
-
-
-
 
   let current_player = player1;
   console.log(turn)
@@ -127,13 +112,7 @@ function move()
   else if(turn % 4 == 0)
       current_player = player4
 
-
-
-
   document.getElementById("player" + current_player.playerNum).style.backgroundColor = "#AAAAFF";
-
-
-
 
   if (current_player.jailed)
   {
@@ -156,31 +135,16 @@ function move()
       }
   }
 
-
-
-
   let prevPosition = current_player.position;
   current_player.position = (current_player.position + rollTotal) %41
 
-
-
-
   let newSpace = document.getElementById("id" + current_player.position);
 
-
-
-
   let color = document.getElementById(current_player.color)
-
-
-
 
   if (newSpace) {
       newSpace.appendChild(color);
   }
-
-
-
 
   if (prevPosition > current_player.position)
   {
@@ -188,9 +152,7 @@ function move()
       updateBalances(current_player);
   }
 
-
   penalties(current_player);
-
 
   if (die1 == die2)
   {
@@ -209,11 +171,9 @@ function move()
       return 0;
   }
 
-
   double = 0;
   turn++;
 }
-
 
 function penalties(player)
 {
@@ -223,25 +183,16 @@ function penalties(player)
       updateBalances(player)
   }
 
-
-
-
   if (player.position == 40)
   {
       player.balance -= 75;
       updateBalances(player)
   }
 
-
-
-
   if(player.position == 3 || player.position == 13 || player.position == 33)
   {
       community_chest(player)
   }
-
-
-
 
   if(player.position == 8 || player.position == 23 || player.position == 37)
   {
@@ -270,107 +221,78 @@ function penalties(player)
   }
 }
 
-
 function rent(player) {
-   for (let i = 0; i < 28; i++) {
-       if (player.position !== properties[i].position)
-       {
-           continue;
-       }
+    for (let i = 0; i < 28; i++) {
+        if (player.position !== properties[i].position) {
+            continue;
+        }
 
+        let owner = null;
 
+        if (player1.properties.includes(properties[i].position)) {
+            owner = player1;
+        } 
+        else if (player2.properties.includes(properties[i].position)) {
+            owner = player2;
+        } 
+        else if (player3.properties.includes(properties[i].position)) {
+            owner = player3;
+        } 
+        else if (player4.properties.includes(properties[i].position)) {
+            owner = player4;
+        }
 
+        if (owner && owner !== player) {
+            if (properties[i].type == "railroad") {
+                railrent(player, owner); 
+                return 0;
+            }
 
-       let owner = null;
+            if (properties[i].type == "utility") {
+                return 0;
+            }
 
+            if (properties[i].house > 0) {
+                properties[i].rents = rents[i][properties[i].house];
+            }
 
+            player.balance -= properties[i].rents;
+            owner.balance += properties[i].rents;
+            console.log("rent: " + properties[i].rents);
+            updateBalances(player);
+            updateBalances(owner);
+        }
+        break;
+    }
 
+    function railrent(player, owner) {
+        let count = 0;
 
-       if (player1.properties.includes(properties[i].position))
-       {
-           owner = player1;
-       }
-       else if (player2.properties.includes(properties[i].position))
-       {
-           owner = player2;
-       }
-       else if (player3.properties.includes(properties[i].position))
-       {
-           owner = player3;
-       }
-       else if (player4.properties.includes(properties[i].position))
-       {
-           owner = player4;
-       }
-
-
-
-
-       if (owner && owner !== player)
-       {
-           if (properties[i].type == "railroad")
-           {
-               railrent(player);
-               return 0;
-           }
-     
-           if(properties[i].type == "utility")
-           {
-               return 0;
-           }
-           player.balance -= properties[i].rents;
-           owner.balance += properties[i].rents;
-           console.log("rent: " + properties[i].rents)
-           updateBalances(player);
-           updateBalances(owner);
-       }
-       break;
-   }
-
-
-   function railrent(player) {
-        let count = 0
-
-
-        for (let i = 0; i < player.properties.length; i++)
-        {
-            if (player.properties[i] == 6 || player.properties[i] == 16 || player.properties[i] == 26 || player.properties[i] == 36)
-            {
+        for (let i = 0; i < owner.properties.length; i++) {
+            if (owner.properties[i] == 6 || owner.properties[i] == 16 || owner.properties[i] == 26 || owner.properties[i] == 36) {
                 count++;
             }
         }
 
-
-        if (count == 1)
-        {
-            player.balance -= 25;
-            owner.balance += 25;
+        let rentAmount = 0;
+        if (count == 1) {
+            rentAmount = 25;
+        } else if (count == 2) {
+            rentAmount = 50;
+        } else if (count == 3) {
+            rentAmount = 100;
+        } else if (count == 4) {
+            rentAmount = 200;
         }
 
+        player.balance -= rentAmount;
+        owner.balance += rentAmount;
 
-        else if (count == 2)
-        {
-            player.balance -= 50;
-            owner.balance += 50;
-        }
-           
-        else if (count == 3)
-        {
-            player.balance -= 100;
-            owner.balance += 100;
-        }
-           
-        else if (count == 4)
-        {
-            player.balance -= 200;
-            owner.balance += 200;
-        }
-
-
+        console.log("railroad rent: " + rentAmount);
         updateBalances(player);
-   }
+        updateBalances(owner);
+    }
 }
-
 
 function buy()
 {
@@ -384,9 +306,6 @@ function buy()
     else if(turn % 4 == 1)
         current_player = player4
 
-
-
-
     for (let i = 0; i < 28; i++) {
         if (current_player.position != properties[i].position)
         {
@@ -394,7 +313,6 @@ function buy()
         }
         if (properties[i].owned)
         {
-            alert("Already owned")
             continue;
         }
         if (current_player.balance < properties[i].price)
@@ -411,15 +329,12 @@ function buy()
             properties[i].type = "utility";
         }
 
-
         current_player.balance -= properties[i].price;
         properties[i].owner = current_player;
         properties[i].owned = true;
 
-
         current_player.properties.push(properties[i].position);
         updateBalances(current_player);
-
 
         let spaceElement = document.getElementById("id" + properties[i].position);
         if (spaceElement)
@@ -445,7 +360,6 @@ function buy()
         console.log(properties[i])
     }
 }
-
 
 function community_chest(player) {
   let num = Math.floor(Math.random() * 10);
@@ -514,7 +428,6 @@ function community_chest(player) {
   }
   updateBalances(player);
 }
-
 
 function chance(player) {
   let num = Math.floor(Math.random() * 10);
@@ -610,7 +523,6 @@ function chance(player) {
   updateBalances(player);
 }
 
-
 function updateBalances(player)
 {
   document.getElementById("player1").innerHTML = "Player 1: $" + player1.balance;
@@ -618,11 +530,67 @@ function updateBalances(player)
   document.getElementById("player3").innerHTML = "Player 3: $" + player3.balance;
   document.getElementById("player4").innerHTML = "Player 4: $" + player4.balance;
 
-
-
-
   if (player.balance < 1)
   {
       alert ("You have gone bankrupt your out");
   }
+}
+
+function house(house, hotel, turn) {
+    let current_player = player1;
+    if(turn % 4 == 1)
+        current_player = player1
+    else if(turn % 4 == 2)
+        current_player = player2
+    else if(turn % 4 == 3)
+        current_player = player3
+    else if(turn % 4 == 0)
+        current_player = player4
+
+    for (let i = 0; i < 28; i++)
+    {
+        if (current_player.position != properties[i].position)
+        {
+            continue;
+        }
+        if (!current_player.properties.includes(properties[i].position))
+        {
+            continue;
+        }
+        if (properties[i].color == null)
+        {
+            continue;
+        }
+        if (properties[i].house == 6)
+        {
+            continue;
+        }
+        if (properties[i].color == "violet" || properties[i].color == "blue")
+        {
+            let count = 2;
+        }
+        else
+        {
+            let count = 3;
+        }
+
+        for (let j = 0; j < current_player.properties.length; j++)
+        {
+            if (properties[i].color == properties[current_player.properties[j]].color)
+            {
+                count--;
+            }
+        }
+        if (count > 0)
+        {
+            alert("You must own all properties of this color to build houses");
+            continue;
+        }
+        if (current_player.balance < properties[i].housePrice)
+        {
+            alert("Insufficient funds");
+            continue;
+        }
+
+    }
 }
