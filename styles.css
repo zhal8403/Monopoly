@@ -6,7 +6,9 @@
    align-items: flex-start;
    gap: 20px;
    padding: 20px;
+   content-visibility: cover;
 }
+
 /* Monopoly Board Grid */
 .grid {
    display: grid;
@@ -17,6 +19,7 @@
    grid-template-columns: 92px repeat(9, 57px) 92px;
    grid-template-rows: 92px repeat(9, 57px) 92px;
 }
+
 #player1, #player2, #player3, #player4 {
   padding: 10px;
   font-size: 1.2em;
@@ -25,6 +28,7 @@
   border-radius: 5px;
   font-weight: bold;
 }
+
 /* Board spaces */
 .top, .right, .left, .bottom, .corner {
    display: flex;
@@ -36,11 +40,14 @@
    position: relative;
    overflow: hidden;
 }
+
 /* Special corners */
 .corner {
    font-size: 12px;
    transform: rotate(180deg);
 }
+
+
 /* Player balances panel */
 .balances {
   width: 250px;
@@ -50,12 +57,14 @@
   text-align: center;
   font-family: Arial, sans-serif;
 }
+
 .balances h2 {
   margin-bottom: 10px;
   font-size: 1.5em;
   border-bottom: 2px solid black;
   padding-bottom: 5px;
 }
+
 .player1, .player2, .player3, .player4 {
   padding: 10px;
   font-size: 1.2em;
@@ -64,6 +73,7 @@
   border-radius: 5px;
   font-weight: bold;
 }
+
 /* Dice display */
 .dice-container {
    text-align: center;
@@ -74,11 +84,8 @@
    top: 45%;
 }
 
-
-
-
 /* Button */
-.roll {
+#roll {
    text-align: center;
    margin-top: 20px;
    font-size: 1.2em;
@@ -87,10 +94,14 @@
    right: 21%;
    top: 53%;
 }
+
+
 button {
   cursor: pointer;
 }
-#buyButton {
+
+
+#buy {
    text-align: center;
    margin-top: 20px;
    font-size: 1.2em;
@@ -99,6 +110,8 @@ button {
    right: 19.5%;
    bottom: 15%;
 }
+
+
 /* Empty center section */
 .center {
    grid-column: 2 / 11;
@@ -110,6 +123,8 @@ button {
    border: 2px solid black;
    position:relative;
 }
+
+
 #blue {
    background-color: blue;
    position: absolute;
@@ -118,6 +133,7 @@ button {
    position: absolute;
    right: 5%;
 }
+
 #red {
    background-color: red;
    position: absolute;
@@ -126,6 +142,7 @@ button {
    position: absolute;
    right: 26%;
 }
+
 #green {
    background-color: green;
    position: absolute;
@@ -134,6 +151,7 @@ button {
    position: absolute;
    left: 27%;
 }
+
 #yellow {
    background-color: yellow;
    position: absolute;
@@ -141,9 +159,11 @@ button {
    height: 1px;
    left: 5%;
 }
+
+
 #mon-man {
   position: absolute;
   top: 0%;
   left: -35px;
   transform: rotate(90deg);
-}
+} 
