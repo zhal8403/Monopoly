@@ -6,9 +6,7 @@
    align-items: flex-start;
    gap: 20px;
    padding: 20px;
-   content-visibility: cover;
 }
-
 /* Monopoly Board Grid */
 .grid {
    display: grid;
@@ -18,15 +16,6 @@
    border: 8px solid rgb(55, 132, 183);
    grid-template-columns: 92px repeat(9, 57px) 92px;
    grid-template-rows: 92px repeat(9, 57px) 92px;
-}
-
-#player1, #player2, #player3, #player4 {
-  padding: 10px;
-  font-size: 1.2em;
-  background-color: #d1ecf1;
-  margin: 5px 0;
-  border-radius: 5px;
-  font-weight: bold;
 }
 
 /* Board spaces */
@@ -40,77 +29,106 @@
    position: relative;
    overflow: hidden;
 }
-
 /* Special corners */
 .corner {
    font-size: 12px;
    transform: rotate(180deg);
 }
-
-
-/* Player balances panel */
-.balances {
-  width: 250px;
-  padding: 15px;
-  border: 2px solid black;
-  background-color: #f8f8f8;
-  text-align: center;
-  font-family: Arial, sans-serif;
-}
-
-.balances h2 {
-  margin-bottom: 10px;
-  font-size: 1.5em;
-  border-bottom: 2px solid black;
-  padding-bottom: 5px;
-}
-
 .player1, .player2, .player3, .player4 {
-  padding: 10px;
-  font-size: 1.2em;
-  background-color: #d1ecf1;
-  margin: 5px 0;
-  border-radius: 5px;
-  font-weight: bold;
+   padding: 10px;
+   font-size: 1.2em;
+   background-color: #d1ecf1;
+   margin: 5px 0;
+   border-radius: 5px;
+   font-weight: bold;
+ }
+ 
+
+.side-bar {
+   width: auto;
+   padding: 5px;
+   text-align: center;
+   font-family: Arial, sans-serif;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   margin-bottom: 20px;
 }
+
+/* Shared panel style for both Actions and Balances */
+.actions, .balances {
+   width: 250px;
+   padding: 15px;
+   border: 2px solid #ccc;
+   background-color: #ffffff;
+   text-align: center;
+   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   margin-bottom: 20px;
+   border-radius: 10px;
+   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+   transition: transform 0.2s ease, box-shadow 0.2s ease;
+ }
+ 
+ .actions:hover, .balances:hover {
+   transform: scale(1.02);
+   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+ }
+ 
+ /* Heading styling for Actions and Balances */
+ .actions h2, .balances h2 {
+   margin-bottom: 15px;
+   font-size: 1.5em;
+   border-bottom: 2px solid #17a2b8;
+   padding-bottom: 6px;
+   width: 100%;
+   color: #333;
+ }
+ 
+ /* Styling for Action buttons */
+ .actions button {
+   margin: 5px;
+   padding: 10px 20px;
+   font-size: 1.2em;
+   border: 1px solid white;
+   background-color: #d1ecf1;
+   border-radius: 5px;
+   width: 75%;
+   font-weight: bold;
+   cursor: pointer;
+   transition: background-color 0.2s ease;
+ }
+ 
+ .actions button:hover {
+   background-color: #c1e7f1;
+ }
+ 
+ /* Styling for Player Names (non-button) */
+ #player1, #player2, #player3, #player4 {
+   padding: 10px 20px;
+   font-size: 1.2em;
+   background-color: #d1ecf1;
+   margin: 5px 0;
+   border-radius: 5px;
+   font-weight: bold;
+   width: 60%;
+   text-align: center;
+   transition: background-color 0.2s ease;
+ }
+ 
+ #player1:hover, #player2:hover, #player3:hover, #player4:hover {
+   background-color: #e0f3f7; /* lighter, non-clickable hover effect */
+ }
+ 
 
 /* Dice display */
 .dice-container {
    text-align: center;
    font-size: 1.5em;
-   margin-top: 15px;
-   position: absolute;
-   right: 21.5%;
-   top: 45%;
+   margin-top: 10px;
 }
-
-/* Button */
-#roll {
-   text-align: center;
-   margin-top: 20px;
-   font-size: 1.2em;
-   padding: 10px 20px;
-   position: absolute;
-   right: 21%;
-   top: 53%;
-}
-
-
-button {
-  cursor: pointer;
-}
-
-
-#buy {
-   text-align: center;
-   margin-top: 20px;
-   font-size: 1.2em;
-   padding: 10px 20px;
-   position: absolute;
-   right: 19.5%;
-   bottom: 15%;
-}
-
 
 /* Empty center section */
 .center {
@@ -123,8 +141,6 @@ button {
    border: 2px solid black;
    position:relative;
 }
-
-
 #blue {
    background-color: blue;
    position: absolute;
@@ -133,7 +149,6 @@ button {
    position: absolute;
    right: 5%;
 }
-
 #red {
    background-color: red;
    position: absolute;
@@ -142,7 +157,6 @@ button {
    position: absolute;
    right: 26%;
 }
-
 #green {
    background-color: green;
    position: absolute;
@@ -151,19 +165,17 @@ button {
    position: absolute;
    left: 27%;
 }
-
 #yellow {
    background-color: yellow;
    position: absolute;
    width: 1px;
    height: 1px;
+   position: absolute;
    left: 5%;
 }
-
-
 #mon-man {
   position: absolute;
   top: 0%;
   left: -35px;
   transform: rotate(90deg);
-} 
+}

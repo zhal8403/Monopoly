@@ -1,92 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monopoly with Dice</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="prop.css">
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Monopoly with Dice</title>
+   <link rel="stylesheet" href="styles.css">
+   <link rel="stylesheet" href="prop.css">
 </head>
 <body>
 
-    <div class="container">
-        <!-- Monopoly Board -->
-        <div class="grid" id="board">
-            <div class="corner" id="id1"><div class="player1" id="blue"></div><div class="player2" id="red"></div><div class="player3" id="green"></div><div class="player4" id="yellow"></div><img src="go.png" alt="GO" width="92px"></div>
-            <div class="top" id="id2"><span>MEDITER- RANEAN AVENUE <br> <br> <br>$60</span></div>
-            <div class="top" id="id3"><span>COMMUNITY CHEST <img src="cc.png" alt="CC"></span></div>
-            <div class="top" id="id4"><span>BALTIC AVENUE<br> <br> <br><br>$60</span></div>
-            <div class="top" id="id5"><span>INCOME TAX <img src="in.png" alt="IN"> $200</span></div>
-            <div class="top" id="id6"><span>READING RAILROAD <img src="rr.png" alt="RAIL">$200</span></div>
-            <div class="top" id="id7"><span>ORIENTAL AVENUE<br> <br><br> <br>$100</span></div>
-            <div class="top" id="id8"><span>CHANCE<img src="pchance.png" alt="chance" width="57px"></span></div>
-            <div class="top" id="id9"><span>VERMONT AVENUE<br> <br> <br><br>₩100</span></div>
-            <div class="top" id="id10"><span>CONNETICUT AVENUE<br> <br> <br><br>₩120</span></div>
-            <div class="corner" id="id11"><span><img src="Jail.png" alt="JAIL" width="92px"></span></div>
+   <div class="container">
 
-            <!-- Side -->
-            <div class="left" id="id40"><span>BOARDWALK<br><br><br><br><br>₩400</span></div>
-            <div class="right" id="id12"><span>₩140<br><br><br><br>PLACE <br>ST.CHARLES  </span></div>
-            <div class="left" id="id39"><span>LUXARY TAX <img src="lux.png" alt="LUX"> <br>PAY $75.00</span></div>
-            <div class="right" id="id13"><span><img src="cc2.png" alt="CC" width="57px"><br>CHEST <br> COMMUNITY </span></div>
-            <div class="left" id="id38"><span>PARK<br>PLACE<br><br><br><br>₩350</span></div>
-            <div class="right" id="id14"><span>₩140<br><br><br><br>AVENUE STATE</span></div>
-            <div class="left" id="id37"><span>CHANCE<br><img src="ochance.png" alt="chance" height="57px"></span></div>
-            <div class="right" id="id15"><span>₩160<br><br><br><br>AVENUE VIRGINIA</span></div>
-            <div class="left" id="id36"><span>SHORT <br>LINE<br><img src="rr2.png" alt="RAIL" height="57px">₩200</span></div>
+       <!-- Monopoly Board -->
+       <div class="grid" id="board">
+           <div class="corner" id="id1"><div class="player1" id="blue"></div><div class="player2" id="red"></div><div class="player3" id="green"></div><div class="player4" id="yellow"></div><img src="go.png" alt="GO" width="92px"></div>
+           <div class="top" id="id2"><span>MEDITER- RANEAN AVENUE <br> <br> <br>$60</span></div>
+           <div class="top" id="id3"><span>COMMUNITY CHEST <img src="cc.png" alt="CC"></span></div>
+           <div class="top" id="id4"><span>BALTIC AVENUE<br> <br> <br><br>$60</span></div>
+           <div class="top" id="id5"><span>INCOME TAX <img src="in.png" alt="IN"> $200</span></div>
+           <div class="top" id="id6"><span>READING RAILROAD <img src="rr.png" alt="RAIL">$200</span></div>
+           <div class="top" id="id7"><span>ORIENTAL AVENUE<br> <br><br> <br>$100</span></div>
+           <div class="top" id="id8"><span>CHANCE<img src="pchance.png" alt="chance" width="57px"></span></div>
+           <div class="top" id="id9"><span>VERMONT AVENUE<br> <br> <br><br>₩100</span></div>
+           <div class="top" id="id10"><span>CONNETICUT AVENUE<br> <br> <br><br>₩120</span></div>
+           <div class="corner" id="id11"><span><img src="Jail.png" alt="JAIL" width="92px"></span></div>
 
-            <!-- Center (unused) -->
-            <div class="center"><img src="logo.png" alt="Monopoly" width="513px"></div>
 
-            <div class="right" id="id16"><span>₩200 <img src="rr2.png" alt="RAIL" height=57px>RAILROAD <br> PENNNSILVANIA</span></div>
-            <div class="left" id="id35"><span>PENNNSILVANIA AVENUE<br><br><br><br><br> ₩320<br></span></div>
-            <div class="right" id="id17"><span>₩180<br><br><br><br>PLACE ST.JAMES</span></div>
-            <div class="left" id="id34"><span>NORTH CAROLINA AVENUE<br><br><br>₩300</span></div>
-            <div class="right" id="id18"><span>₩180<br><br><br><br>AVENUE TENNESSE </span></div>
-            <div class="left" id="id33"><span>COMMUNITY <br>CHEST <br><img src="cc2.png" alt="CC" width="57px"></span></div>
-            <div class="right" id="id19"><span>₩150 <img src="light.png" alt="Light Bulb" width="47px"> COMPANY <br>ELECTRIC</span></div>
-            <div class="left" id="id32"><span>PACIFIC AVENUE<br><br><br><br>₩300</span></div>
-            <div class="right" id="id20"><span>₩200<br><br><br><br>AVENUE<br> NEW YORK</span></div>
+           <!-- Side -->
+           <div class="left" id="id40"><span>BOARDWALK<br><br><br><br><br>₩400</span></div>
+           <div class="right" id="id12"><span>PLACE ST. CHARLES<br><br><br><br>₩140</span></div>
+           <div class="left" id="id39"><span>LUXARY TAX <img src="lux.png" alt="LUX"> <br>PAY $75.00</span></div>
+           <div class="right" id="id13"><span>COMMUNITY CHEST<br><img src="cc2.png" alt="CC" width="57px"></span></div>
+           <div class="left" id="id38"><span>PARK<br>PLACE<br><br><br><br>₩350</span></div>
+           <div class="right" id="id14"><span>AVENUE STATE<br><br><br><br>₩140</span></div>
+           <div class="left" id="id37"><span>CHANCE<br><img src="ochance.png" alt="chance" height="57px"></span></div>
+           <div class="right" id="id15"><span>AVENUE VIRGINIA<br><br><br><br>₩160</span></div>
+           <div class="left" id="id36"><span>SHORT <br>LINE<br><img src="rr2.png" alt="RAIL" height="57px">₩200</span></div>
 
-            <!-- Bottom row -->
-            <div class="corner" id="id31"><img src="to jail.png" alt="To Jail" width="92px"></div>
-            <div class="bottom" id="id30"><span>MARVINS GARDINS <br> <br> <br> <br> ₩280</span></div>
-            <div class="bottom" id="id29"><span>WATER WORKS <img src="water.png" alt="Drain">₩150</span></div>
-            <div class="bottom" id="id28"><span>VENTNOR AVENUE <br> <br> <br> <br> ₩260</span></div>
-            <div class="bottom" id="id27"><span>ATLANTIC AVENUE <br> <br> <br> <br> ₩260</span></div>
-            <div class="bottom" id="id26"><span>B & O. RAILROAD <img src="rr.png" alt="RAIL">₩200</span></div>
-            <div class="bottom" id="id25"><span>ILLINOIS AVENUE <br> <br> <br> <br> ₩240</span></div>
-            <div class="bottom" id="id24"><span>INDIANA AVENUE <br> <br> <br> <br> ₩220</span></div>
-            <div class="bottom" id="id23"><span>CHANCE <img src="chance.png" alt="chance" width="57px"></span></div>
-            <div class="bottom" id="id22"><span>KENTUCKY AVENUE <br> <br> <br> <br> ₩220</span></div>
-            <div class="corner" id="id21"><img src="park.png" alt="Free Parking" width="92px"></div>
+
+           <!-- Center (unused) -->
+           <div class="center"><img src="logo.png" alt="Monopoly" width="513px"></div>
+
+
+           <div class="right" id="id16"><span>PENNSYLVANIA RAILROAD<br><img src="rr2.png" alt="RAIL" height="57px">₩200</span></div>
+           <div class="left" id="id35"><span>PENNNSILVANIA AVENUE<br><br><br><br><br> ₩320<br></span></div>
+           <div class="right" id="id17"><span>PLACE ST. JAMES<br><br><br><br>₩180</span></div>
+           <div class="left" id="id34"><span>NORTH CAROLINA AVENUE<br><br><br>₩300</span></div>
+           <div class="right" id="id18"><span>AVENUE TENNESSEE<br><br><br><br>₩180</span></div>
+           <div class="left" id="id33"><span>COMMUNITY <br>CHEST <br><img src="cc2.png" alt="CC" width="57px"></span></div>
+           <div class="right" id="id19"><span>ELECTRIC COMPANY<br><img src="light.png" alt="Light Bulb" width="47px">₩150</span></div>
+           <div class="left" id="id32"><span>PACIFIC AVENUE<br><br><br><br>₩300</span></div>
+           <div class="right" id="id20"><span>AVENUE NEW YORK<br><br><br><br>₩200</span></div>
+
+
+           <!-- Bottom row -->
+           <div class="corner" id="id31"><img src="to jail.png" alt="To Jail" width="92px"></div>
+           <div class="bottom" id="id30"><span>MARVINS GARDINS <br> <br> <br> <br> ₩280</span></div>
+           <div class="bottom" id="id29"><span>WATER WORKS <img src="water.png" alt="Drain">₩150</span></div>
+           <div class="bottom" id="id28"><span>VENTNOR AVENUE <br> <br> <br> <br> ₩260</span></div>
+           <div class="bottom" id="id27"><span>ATLANTIC AVENUE <br> <br> <br> <br> ₩260</span></div>
+           <div class="bottom" id="id26"><span>B & O. RAILROAD <img src="rr.png" alt="RAIL">₩200</span></div>
+           <div class="bottom" id="id25"><span>ILLINOIS AVENUE <br> <br> <br> <br> ₩240</span></div>
+           <div class="bottom" id="id24"><span>INDIANA AVENUE <br> <br> <br> <br> ₩220</span></div>
+           <div class="bottom" id="id23"><span>CHANCE <img src="chance.png" alt="chance" width="57px"></span></div>
+           <div class="bottom" id="id22"><span>KENTUCKY AVENUE <br> <br> <br> <br> ₩220</span></div>
+           <div class="corner" id="id21"><img src="park.png" alt="Free Parking" width="92px"></div>
+       </div>
+
+       <div class="side-bar">
+            <div class="balances">
+                <h2>Player Balances</h2>
+                <div id="player1">Player 1: $1500</div>
+                <div id="player2">Player 2: $1500</div>
+                <div id="player3">Player 3: $1500</div>
+                <div id="player4">Player 4: $1500</div>
+            </div>
+            
+            <div class="actions">
+                <h2>Control Panel</h2>
+                <div class="dice-container">
+                    <img id="dice1" src="1.png" alt="Dice 1" width="50px">
+                    <img id="dice2" src="1.png" alt="Dice 2" width="50px">
+                </div>
+                <button id="roll" onclick="move(turn)">Roll Dice</button>
+                <button id="buy" onclick="buy()">Buy Property</button>
+                <button id="house" onclick="house(house, hotel, turn)">Buy House</button>
+                <button id="trade" onclick="trade()">Trade Property</button>
+                <button id="sell" onclick="sell()">Sell Property</button>
+                <div>
+                    <input name="property" list="monopoly-properties" placeholder="Select Property">
+                    <datalist id="monopoly-properties">
+                        <!-- Brown -->
+                        <option value="Mediterranean Avenue">
+                        <option value="Baltic Avenue">
+                        <!-- Light Blue -->
+                        <option value="Oriental Avenue">
+                        <option value="Vermont Avenue">
+                        <option value="Connecticut Avenue">
+                        <!-- Pink -->
+                        <option value="St. Charles Place">
+                        <option value="States Avenue">
+                        <option value="Virginia Avenue">
+                        <!-- Orange -->
+                        <option value="St. James Place">
+                        <option value="Tennessee Avenue">
+                        <option value="New York Avenue">
+                        <!-- Red -->
+                        <option value="Kentucky Avenue">
+                        <option value="Indiana Avenue">
+                        <option value="Illinois Avenue">
+                        <!-- Yellow -->
+                        <option value="Atlantic Avenue">
+                        <option value="Ventnor Avenue">
+                        <option value="Marvin Gardens">
+                        <!-- Green -->
+                        <option value="Pacific Avenue">
+                        <option value="North Carolina Avenue">
+                        <option value="Pennsylvania Avenue">
+                        <!-- Dark Blue -->
+                        <option value="Park Place">
+                        <option value="Boardwalk">
+                        <!-- Railroads -->
+                        <option value="Reading Railroad">
+                        <option value="Pennsylvania Railroad">
+                        <option value="B&O Railroad">
+                        <option value="Short Line">
+                        <!-- Utilities -->
+                        <option value="Electric Company">
+                        <option value="Water Works">
+                    </datalist>
+                </div>                
+            </div>
         </div>
 
-        <!-- Player Balances -->
-        <div class="balances">
-            <h2>Player Balances</h2>
-            <div id="player1">Player 1: $1500</div>
-            <div id="player2">Player 2: $1500</div>
-            <div id="player3">Player 3: $1500</div>
-            <div id="player4">Player 4: $1500</div>
-        </div>
+   <div id="mon-man">
+       <img src="mon-man.png" alt="Monopoly man" width="80px">
+   </div>
 
-        <!-- Dice Roll Display -->
-        <div class="dice-container">
-            <img id="dice1" src="1.png" alt="Dice 1" width="50px">
-            <img id="dice2" src="1.png" alt="Dice 2" width="50px">
-        </div>
-
-        <button id="roll" onclick="move(turn)">Roll Dice</button>
-        <button id="buy" onclick="buy()">Buy Property</button>
-        <button id="house" onclick="house()">Buy House</button>
-        <button id="sell" onclick="sell()">sell</button>
-    </div>
-
-    <div id="mon-man">
-        <img src="mon-man.png" alt="Monopoly man" width="80px">
-    </div>
-
-    <script src="script.js"></script>
+   <script src="script.js"></script>
 </body>
 </html>
