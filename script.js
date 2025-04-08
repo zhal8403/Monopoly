@@ -565,13 +565,14 @@ function house(house, hotel, turn) {
         {
             continue;
         }
+        let count;
         if (properties[i].color == "violet" || properties[i].color == "blue")
         {
-            let count = 2;
+            count = 2;
         }
         else
         {
-            let count = 3;
+            count = 3;
         }
 
         for (let j = 0; j < current_player.properties.length; j++)
