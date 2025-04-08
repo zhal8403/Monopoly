@@ -28,6 +28,7 @@ class Property
       this.mortgage = mortgage;
       this.house = 0;
       this.color = color;
+      this.monopoly = false;
   }
 }
 let turn =1;
@@ -249,7 +250,12 @@ function rent(player) {
             }
 
             if (properties[i].type == "utility") {
+                utility();
                 return 0;
+            }
+
+            if (properties[i].monopoly == true) {
+                properties[i].rents = properties[i].rent * 2;
             }
 
             if (properties[i].house > 0) {
@@ -292,6 +298,27 @@ function rent(player) {
         updateBalances(player);
         updateBalances(owner);
     }
+    function utility(){
+        let count = 0;
+        for (let i = 0; i < player.properties.length; i++)
+        {
+            if (properties[player.properties[i]].type == "utility")
+            {
+                count++;
+            }
+        }
+        let u1 = Math.floor(Math.random() * 6) + 1;
+        let u2 = Math.floor(Math.random() * 6) + 1;
+        if (count == 1)
+        {
+            player.balance -= (u1 + u2) * 4;
+        }
+        else if (count == 2)
+        {
+            player.balance -= (u1 + u2) * 10;
+        }
+        updateBalances(player);
+    }
 }
 
 function buy()
@@ -329,6 +356,28 @@ function buy()
             properties[i].type = "utility";
         }
 
+        let count;
+        if (properties[i].color == "violet" || properties[i].color == "blue")
+        {
+            count = 2;
+        }
+        else
+        {
+            count = 3;
+        }
+
+        for (let j = 0; j < current_player.properties.length; j++)
+        {
+            if (properties[i].color == properties[current_player.properties[j]].color)
+            {
+                count--;
+            }
+        }
+        if (count = 0)
+        {
+            properties[i].monopoly = true;
+        }
+
         current_player.balance -= properties[i].price;
         properties[i].owner = current_player;
         properties[i].owned = true;
@@ -358,6 +407,7 @@ function buy()
         }
         console.log(" bought " + properties[i].position);
         console.log(properties[i])
+
     }
 }
 
@@ -565,33 +615,29 @@ function house(house, hotel, turn) {
         {
             continue;
         }
-        let count;
-        if (properties[i].color == "violet" || properties[i].color == "blue")
+        if (properties[i].monopoly == false)
         {
-            count = 2;
-        }
-        else
-        {
-            count = 3;
-        }
-
-        for (let j = 0; j < current_player.properties.length; j++)
-        {
-            if (properties[i].color == properties[current_player.properties[j]].color)
-            {
-                count--;
-            }
-        }
-        if (count > 0)
-        {
-            alert("You must own all properties of this color to build houses");
             continue;
         }
         if (current_player.balance < properties[i].housePrice)
         {
-            alert("Insufficient funds");
             continue;
         }
+        if (house > 0 && properties[i].house < 5)
+        {
+            properties[i].house++;
+            current_player.balance -= properties[i].housePrice;
+            house--;
+        }
+        if (hotel > 0 && properties[i].house == 5)
+        {
+            properties[i].house = 0;
+            properties[i].house++;
+            current_player.balance -= properties[i].housePrice;
+            hotel--;
+        }
+        updateBalances(current_player);
+        console.log(" bought " + properties[i].house);
 
     }
 }
