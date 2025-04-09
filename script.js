@@ -10,6 +10,7 @@ class Player
       this.jailed = false;
       this.getOutOfJail = false;
       this.jailTime = 0;
+      this.double = 0;
       this.sigma = "very";
   }
 }
@@ -85,7 +86,10 @@ for (let i = 0; i < 28; i++)
 
 function move()
 {
-    turn++;
+    if(current_player.double == 0)
+    {
+        turn++;
+    }
 
     document.getElementById("player1").style.backgroundColor = "#d1ecf1";
     document.getElementById("player2").style.backgroundColor = "#d1ecf1";
@@ -153,20 +157,20 @@ function move()
 
     if (die1 == die2)
     {
-        double++;
-        console.log("double" + double)
+        current_player.double++;
+        console.log("double" + current_player.double)
         if (double == 3)
             {
                 current_player.jailed = true;
                 alert("Three double rolls is illegal")
                 current_player.position = 11;
                 document.getElementById("id" + current_player.position).appendChild(document.getElementById(current_player.color));
-                double = 0;
+                current_player.double = 0;
             }
         return 0;
     }
 
-    double = 0;
+    current_player.double = 0;
 }
 
 function penalties(player)
@@ -177,7 +181,7 @@ function penalties(player)
       updateBalances(player)
   }
 
-  if (player.position == 38)
+  if (player.position == 39)
   {
       player.balance -= 75;
       updateBalances(player)
@@ -243,7 +247,7 @@ function rent(player) {
             }
 
             if (properties[i].type == "utility") {
-                utility();
+                utility(player, owner);
                 return 0;
             }
 
@@ -291,12 +295,10 @@ function rent(player) {
         updateBalances(player);
         updateBalances(owner);
     }
-    function utility(){
+    function utility(player, owner){
         let count = 0;
-        for (let i = 0; i < player.properties.length; i++)
-        {
-            if (properties[player.properties[i]].type == "utility")
-            {
+        for (let i = 0; i < owner.properties.length; i++) {
+            if (owner.properties[i] == 19 || owner.properties[i] == 29) {
                 count++;
             }
         }
@@ -305,10 +307,12 @@ function rent(player) {
         if (count == 1)
         {
             player.balance -= (u1 + u2) * 4;
+            console.log("utility rent: " + (u1 + u2) * 4)
         }
         else if (count == 2)
         {
             player.balance -= (u1 + u2) * 10;
+            console.log("utility rent: " + (u1 + u2) * 10)
         }
         updateBalances(player);
     }
@@ -323,7 +327,7 @@ function buy()
         current_player = player2
     else if(turn % 4 == 3)
         current_player = player3
-    else if(turn % 4 == 4)
+    else if(turn % 4 == 0)
         current_player = player4
 
     for (let i = 0; i < 28; i++) {
