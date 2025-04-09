@@ -31,7 +31,7 @@ class Property
       this.monopoly = false;
   }
 }
-let turn =1;
+let turn =0;
 let double = 0;
 let house = 32;
 let hotel = 12;
@@ -49,30 +49,30 @@ let color = ["violet", "violet", null, "indigo", "indigo", "indigo", "pink", "pi
 let rents = [
     [2, 10, 30, 90, 160, 250], // Mediterranean Avenue
     [4, 20, 60, 180, 320, 450], // Baltic Avenue
-    [-1]
+    [-1],
     [6, 30, 90, 270, 400, 550], // Oriental Avenue
     [6, 30, 90, 270, 400, 550], // Vermont Avenue
     [8, 40, 100, 300, 450, 600], // Connecticut Avenue
     [10, 50, 150, 450, 625, 750], // St. Charles Place
     [10, 50, 150, 450, 625, 750], // States Avenue
     [12, 60, 180, 500, 700, 900], // Virginia Avenue
-    [-1]
+    [-1],
     [14, 70, 200, 550, 750, 950], // St. James Place
     [14, 70, 200, 550, 750, 950], // Tennessee Avenue
-    [-1]
+    [-1],
     [16, 80, 220, 600, 800, 1000], // New York Avenue
     [18, 90, 250, 700, 875, 1050], // Kentucky Avenue
     [18, 90, 250, 700, 875, 1050], // Indiana Avenue
     [20, 100, 300, 750, 925, 1100], // Illinois Avenue
-    [-1]
+    [-1],
     [22, 110, 330, 800, 975, 1150], // Atlantic Avenue
     [22, 110, 330, 800, 975, 1150], // Ventnor Avenue
-    [-1]
+    [-1],
     [24, 120, 360, 850, 1025, 1200], // Marvin Gardens
     [26, 130, 390, 900, 1100, 1275], // Pacific Avenue
     [26, 130, 390, 900, 1100, 1275], // North Carolina Avenue
     [28, 150, 450, 1000, 1200, 1400], // Pennsylvania Avenue
-    [-1]
+    [-1],
     [35, 175, 500, 1100, 1300, 1500], // Park Place
     [50, 200, 600, 1400, 1700, 2000]  // Boardwalk
 ];
@@ -80,100 +80,93 @@ let properties = [];
 
 for (let i = 0; i < 28; i++)
 {
-  properties.push(new Property(position[i], price[i], rents[i], housePrices[i], mortgage[i], color[i]));
+  properties.push(new Property(position[i], price[i], rents[i][0], housePrices[i], mortgage[i], color[i]));
 }
 
 function move()
 {
-  if (double > 0)
- {
-      turn--;
-  }
+    turn++;
 
-  document.getElementById("player1").style.backgroundColor = "#d1ecf1";
-  document.getElementById("player2").style.backgroundColor = "#d1ecf1";
-  document.getElementById("player3").style.backgroundColor = "#d1ecf1";
-  document.getElementById("player4").style.backgroundColor = "#d1ecf1";
+    document.getElementById("player1").style.backgroundColor = "#d1ecf1";
+    document.getElementById("player2").style.backgroundColor = "#d1ecf1";
+    document.getElementById("player3").style.backgroundColor = "#d1ecf1";
+    document.getElementById("player4").style.backgroundColor = "#d1ecf1";
 
-  let die1 = Math.floor(Math.random() * 6) + 1;
-  let die2 = Math.floor(Math.random() * 6) + 1;
-  let rollTotal = die1 + die2;
+    let die1 = Math.floor(Math.random() * 6) + 1;
+    let die2 = Math.floor(Math.random() * 6) + 1;
+    let rollTotal = die1 + die2;
 
-  document.getElementById("dice1").src = die1 + ".png";
-  document.getElementById("dice2").src = die2 + ".png";
+    document.getElementById("dice1").src = die1 + ".png";
+    document.getElementById("dice2").src = die2 + ".png";
 
-  let current_player = player1;
-  console.log(turn)
-  if(turn % 4 == 1)
-      current_player = player1
-  else if(turn % 4 == 2)
-      current_player = player2
-  else if(turn % 4 == 3)
-      current_player = player3
-  else if(turn % 4 == 0)
-      current_player = player4
+    let current_player = player1;
+    console.log(turn)
+    if(turn % 4 == 1)
+        current_player = player1;
+    else if(turn % 4 == 2)
+        current_player = player2
+    else if(turn % 4 == 3)
+        current_player = player3
+    else if(turn % 4 == 0)
+        current_player = player4
 
-  document.getElementById("player" + current_player.playerNum).style.backgroundColor = "#AAAAFF";
+    document.getElementById("player" + current_player.playerNum).style.backgroundColor = "#AAAAFF";
 
-  if (current_player.jailed)
-  {
-      if (die1 != die2)
-      {
-          current_player.jailTime++;
-          console.log(current_player.jailTime)
-          if(current_player.jailTime < 4)
-          {
-              turn++;
-              return 0;
-          }
-          else
-          {
-              current_player.balance -= 50;
-              updateBalances(current_player);
-              alert("You paid $50 to get out of jail");
-              current_player.jailed = false;
-          }
-      }
-  }
-
-  let prevPosition = current_player.position;
-  current_player.position = (current_player.position + rollTotal) %41
-
-  let newSpace = document.getElementById("id" + current_player.position);
-
-  let color = document.getElementById(current_player.color)
-
-  if (newSpace) {
-      newSpace.appendChild(color);
-  }
-
-  if (prevPosition > current_player.position)
-  {
-      current_player.balance += 200;
-      updateBalances(current_player);
-  }
-
-  penalties(current_player);
-
-  if (die1 == die2)
-  {
-      double++;
-      console.log("double" + double)
-      turn++;
-      if (double == 3)
+    if (current_player.jailed)
+    {
+        if (die1 != die2)
         {
-            current_player.jailed = true;
-            alert("Three double rolls is illegal")
-            turn++;
-            current_player.position = 11;
-            document.getElementById("id" + current_player.position).appendChild(document.getElementById(current_player.color));
-            double = 0;
+            current_player.jailTime++;
+            console.log(current_player.jailTime)
+            if(current_player.jailTime < 4)
+            {
+                return 0;
+            }
+            else
+            {
+                current_player.balance -= 50;
+                updateBalances(current_player);
+                alert("You paid $50 to get out of jail");
+                current_player.jailed = false;
+            }
         }
-      return 0;
-  }
+    }
 
-  double = 0;
-  turn++;
+    let prevPosition = current_player.position;
+    current_player.position = (current_player.position + rollTotal) %41
+
+    let newSpace = document.getElementById("id" + current_player.position);
+
+    let color = document.getElementById(current_player.color)
+
+    if (newSpace) {
+        newSpace.appendChild(color);
+    }
+
+    if (prevPosition > current_player.position)
+    {
+        current_player.balance += 200;
+        updateBalances(current_player);
+    }
+
+    penalties(current_player);
+
+    if (die1 == die2)
+    {
+        double++;
+        console.log("double" + double)
+        if (double == 3)
+            {
+                current_player.jailed = true;
+                alert("Three double rolls is illegal")
+                current_player.position = 11;
+                document.getElementById("id" + current_player.position).appendChild(document.getElementById(current_player.color));
+                double = 0;
+            }
+        return 0;
+    }
+
+    double = 0;
 }
 
 function penalties(player)
@@ -184,7 +177,7 @@ function penalties(player)
       updateBalances(player)
   }
 
-  if (player.position == 40)
+  if (player.position == 38)
   {
       player.balance -= 75;
       updateBalances(player)
@@ -324,13 +317,13 @@ function rent(player) {
 function buy()
 {
     let current_player = player1;
-    if(turn % 4 == 2)
+    if(turn % 4 == 1)
         current_player = player1
-    else if(turn % 4 == 3)
+    else if(turn % 4 == 2)
         current_player = player2
-    else if(turn % 4 == 0)
+    else if(turn % 4 == 3)
         current_player = player3
-    else if(turn % 4 == 1)
+    else if(turn % 4 == 4)
         current_player = player4
 
     for (let i = 0; i < 28; i++) {
@@ -586,7 +579,7 @@ function updateBalances(player)
   }
 }
 
-function house(house, hotel, turn) {
+function buyHouse() {
     let current_player = player1;
     if(turn % 4 == 1)
         current_player = player1
