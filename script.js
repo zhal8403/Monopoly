@@ -86,10 +86,6 @@ for (let i = 0; i < 28; i++)
 
 function move()
 {
-    if(current_player.double == 0)
-    {
-        turn++;
-    }
 
     document.getElementById("player1").style.backgroundColor = "#d1ecf1";
     document.getElementById("player2").style.backgroundColor = "#d1ecf1";
@@ -104,17 +100,22 @@ function move()
     document.getElementById("dice2").src = die2 + ".png";
 
     let current_player = player1;
-    console.log(turn)
-    if(turn % 4 == 1)
+    if(turn % 4 == 0)
         current_player = player1;
-    else if(turn % 4 == 2)
+    else if(turn % 4 == 1)
         current_player = player2
-    else if(turn % 4 == 3)
+    else if(turn % 4 == 2)
         current_player = player3
-    else if(turn % 4 == 0)
+    else if(turn % 4 == 3)
         current_player = player4
 
     document.getElementById("player" + current_player.playerNum).style.backgroundColor = "#AAAAFF";
+
+    if(current_player.double == 0)
+    {
+        turn++;
+    }
+    console.log(turn)
 
     if (current_player.jailed)
     {
@@ -159,7 +160,7 @@ function move()
     {
         current_player.double++;
         console.log("double" + current_player.double)
-        if (double == 3)
+        if (current_player.double == 3)
             {
                 current_player.jailed = true;
                 alert("Three double rolls is illegal")
@@ -169,7 +170,6 @@ function move()
             }
         return 0;
     }
-
     current_player.double = 0;
 }
 
@@ -572,15 +572,15 @@ function chance(player) {
 
 function updateBalances(player)
 {
-  document.getElementById("player1").innerHTML = "Player 1: $" + player1.balance;
-  document.getElementById("player2").innerHTML = "Player 2: $" + player2.balance;
-  document.getElementById("player3").innerHTML = "Player 3: $" + player3.balance;
-  document.getElementById("player4").innerHTML = "Player 4: $" + player4.balance;
+    document.getElementById("player1").innerHTML = "Player 1: $" + player1.balance;
+    document.getElementById("player2").innerHTML = "Player 2: $" + player2.balance;
+    document.getElementById("player3").innerHTML = "Player 3: $" + player3.balance;
+    document.getElementById("player4").innerHTML = "Player 4: $" + player4.balance;
 
-  if (player.balance < 1)
-  {
-      alert ("You have gone bankrupt your out");
-  }
+    if (player.balance < 1)
+    {
+        alert ("You have gone bankrupt your out");
+    }
 }
 
 function buyHouse() {
