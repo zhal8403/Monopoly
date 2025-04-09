@@ -1,181 +1,115 @@
 /* Main layout container */
 .container {
-   display: flex;
-   flex-wrap: wrap;
-   justify-content: center;
-   align-items: flex-start;
-   gap: 20px;
-   padding: 20px;
-}
-/* Monopoly Board Grid */
-.grid {
-   display: grid;
-   width: 697px;
-   height: 697px;
-   background-color: rgb(18, 15, 15);
-   border: 8px solid rgb(55, 132, 183);
-   grid-template-columns: 92px repeat(9, 57px) 92px;
-   grid-template-rows: 92px repeat(9, 57px) 92px;
-}
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+ }
+ /* Monopoly Board Grid */
+ .grid {
+    display: grid;
+    width: 697px;
+    height: 697px;
+    background-color: rgb(18, 15, 15);
+    border: 8px solid rgb(55, 132, 183);
+    grid-template-columns: 92px repeat(9, 57px) 92px;
+    grid-template-rows: 92px repeat(9, 57px) 92px;
+ }
+ 
+ /* Board spaces */
+ .top, .right, .left, .bottom, .corner {
+    display: flex;
+    justify-content: center;
+    border: 1px solid black;
+    font-size: 8px;
+    text-align: center;
+    background-color: rgb(207, 230, 207);
+    position: relative;
+    overflow: hidden;
+ }
+ /* Special corners */
+ .corner {
+    font-size: 12px;
+    transform: rotate(180deg);
+ }
+ .player1, .player2, .player3, .player4 {
+    padding: 10px;
+    font-size: 1.2em;
+    background-color: #d1ecf1;
+    margin: 5px 0;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+  
+ 
+ .side-bar {
+    width: auto;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+ }
+ 
+ .actions, .balances {
+    width: 300px;
+    padding: 15px;
+    border: 2px solid #ccc;
+    background-color: #ffffff;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+    border-radius: 10px;
+  }
+  
+  .actions h2, .balances h2 {
+    margin-bottom: 15px;
+    font-size: 1.5em;
+    border-bottom: 2px solid #17a2b8;
+    padding-bottom: 6px;
+    width: 100%;
+    color: #333;
+  }
+  
+  .actions button {
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border: 1px solid white;
+    background-color: #d1ecf1;
+    border-radius: 5px;
+    width: 75%;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .actions button:hover {
+    background-color: #c1e7f1;
+  }
 
-/* Board spaces */
-.top, .right, .left, .bottom, .corner {
-   display: flex;
-   justify-content: center;
-   border: 1px solid black;
-   font-size: 8px;
-   text-align: center;
-   background-color: rgb(207, 230, 207);
-   position: relative;
-   overflow: hidden;
-}
-/* Special corners */
-.corner {
-   font-size: 12px;
-   transform: rotate(180deg);
-}
-.player1, .player2, .player3, .player4 {
-   padding: 10px;
-   font-size: 1.2em;
-   background-color: #d1ecf1;
-   margin: 5px 0;
-   border-radius: 5px;
-   font-weight: bold;
+  #player1, #player2, #player3, #player4 {
+    padding: 10px 20px;
+    font-size: 1.2em;
+    background-color: #d1ecf1;
+    margin: 5px 0;
+    border-radius: 5px;
+    font-weight: bold;
+    width: 60%;
+    text-align: center;
+    transition: background-color 0.2s ease;
+  }
+  
+  #player1:hover, #player2:hover, #player3:hover, #player4:hover {
+    background-color: #e0f3f7; 
+  }
+  
+ .dice-container {
+    text-align: center;
+    font-size: 1.5em;
+    margin-top: 10px;
  }
  
-
-.side-bar {
-   width: auto;
-   padding: 5px;
-   text-align: center;
-   font-family: Arial, sans-serif;
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   margin-bottom: 20px;
-}
-
-/* Shared panel style for both Actions and Balances */
-.actions, .balances {
-   width: 250px;
-   padding: 15px;
-   border: 2px solid #ccc;
-   background-color: #ffffff;
-   text-align: center;
-   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   margin-bottom: 20px;
-   border-radius: 10px;
-   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-   transition: transform 0.2s ease, box-shadow 0.2s ease;
- }
- 
- .actions:hover, .balances:hover {
-   transform: scale(1.02);
-   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
- }
- 
- /* Heading styling for Actions and Balances */
- .actions h2, .balances h2 {
-   margin-bottom: 15px;
-   font-size: 1.5em;
-   border-bottom: 2px solid #17a2b8;
-   padding-bottom: 6px;
-   width: 100%;
-   color: #333;
- }
- 
- /* Styling for Action buttons */
- .actions button {
-   margin: 5px;
-   padding: 10px 20px;
-   font-size: 1.2em;
-   border: 1px solid white;
-   background-color: #d1ecf1;
-   border-radius: 5px;
-   width: 75%;
-   font-weight: bold;
-   cursor: pointer;
-   transition: background-color 0.2s ease;
- }
- 
- .actions button:hover {
-   background-color: #c1e7f1;
- }
- 
- /* Styling for Player Names (non-button) */
- #player1, #player2, #player3, #player4 {
-   padding: 10px 20px;
-   font-size: 1.2em;
-   background-color: #d1ecf1;
-   margin: 5px 0;
-   border-radius: 5px;
-   font-weight: bold;
-   width: 60%;
-   text-align: center;
-   transition: background-color 0.2s ease;
- }
- 
- #player1:hover, #player2:hover, #player3:hover, #player4:hover {
-   background-color: #e0f3f7; /* lighter, non-clickable hover effect */
- }
- 
-
-/* Dice display */
-.dice-container {
-   text-align: center;
-   font-size: 1.5em;
-   margin-top: 10px;
-}
-
-/* Empty center section */
-.center {
-   grid-column: 2 / 11;
-   grid-row: 2 / 11;
-   background-color: rgb(201, 236, 210) ;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   border: 2px solid black;
-   position:relative;
-}
-#blue {
-   background-color: blue;
-   position: absolute;
-   width: 1px;
-   height: 1px;
-   position: absolute;
-   right: 5%;
-}
-#red {
-   background-color: red;
-   position: absolute;
-   width: 1px;
-   height: 1px;
-   position: absolute;
-   right: 26%;
-}
-#green {
-   background-color: green;
-   position: absolute;
-   width: 1px;
-   height: 1px;
-   position: absolute;
-   left: 27%;
-}
-#yellow {
-   background-color: yellow;
-   position: absolute;
-   width: 1px;
-   height: 1px;
-   position: absolute;
-   left: 5%;
-}
-#mon-man {
-  position: absolute;
-  top: 0%;
-  left: -35px;
-  transform: rotate(90deg);
-}
