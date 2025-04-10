@@ -65,3 +65,36 @@
 #id16 ,#id35{
    font-size: 7px;
 }
+
+#blue {
+   background-color: blue;
+   position: absolute;
+   width: 1px;
+   height: 1px;
+   position: absolute;
+   right: 5%;
+}
+#red {
+   background-color: red;
+   position: absolute;
+   width: 1px;
+   height: 1px;
+   position: absolute;
+   right: 26%;
+}
+#green {
+   background-color: green;
+   position: absolute;
+   width: 1px;
+   height: 1px;
+   position: absolute;
+   left: 27%;
+}
+#yellow {
+   background-color: yellow;
+   position: absolute;
+   width: 1px;
+   height: 1px;
+   position: absolute;
+   left: 5%;
+}
