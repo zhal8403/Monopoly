@@ -36,28 +36,14 @@
 }
 .player1, .player2, .player3, .player4 {
    padding: 10px;
-   font-size: 1.2em;
    background-color: #d1ecf1;
    margin: 5px 0;
    border-radius: 5px;
-   font-weight: bold;
  }
- 
-
-.side-bar {
-   width: auto;
-   padding: 5px;
-   text-align: center;
-   font-family: Arial, sans-serif;
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   margin-bottom: 20px;
-}
 
 /* Shared panel style for both Actions and Balances */
 .actions, .balances {
-   width: 250px;
+   width: 300px;
    padding: 15px;
    border: 2px solid #ccc;
    background-color: #ffffff;
@@ -69,12 +55,6 @@
    margin-bottom: 20px;
    border-radius: 10px;
    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-   transition: transform 0.2s ease, box-shadow 0.2s ease;
- }
- 
- .actions:hover, .balances:hover {
-   transform: scale(1.02);
-   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
  }
  
  /* Heading styling for Actions and Balances */
@@ -98,7 +78,6 @@
    width: 75%;
    font-weight: bold;
    cursor: pointer;
-   transition: background-color 0.2s ease;
  }
  
  .actions button:hover {
@@ -113,24 +92,22 @@
    margin: 5px 0;
    border-radius: 5px;
    font-weight: bold;
-   width: 60%;
    text-align: center;
-   transition: background-color 0.2s ease;
  }
  
  #player1:hover, #player2:hover, #player3:hover, #player4:hover {
-   background-color: #e0f3f7; /* lighter, non-clickable hover effect */
+   background-color: #e0f3f7;
  }
  
 
-/* Dice display */
+
 .dice-container {
    text-align: center;
    font-size: 1.5em;
    margin-top: 10px;
 }
 
-/* Empty center section */
+
 .center {
    grid-column: 2 / 11;
    grid-row: 2 / 11;
@@ -141,41 +118,29 @@
    border: 2px solid black;
    position:relative;
 }
-#blue {
-   background-color: blue;
-   position: absolute;
-   width: 1px;
-   height: 1px;
-   position: absolute;
-   right: 5%;
-}
-#red {
-   background-color: red;
-   position: absolute;
-   width: 1px;
-   height: 1px;
-   position: absolute;
-   right: 26%;
-}
-#green {
-   background-color: green;
-   position: absolute;
-   width: 1px;
-   height: 1px;
-   position: absolute;
-   left: 27%;
-}
-#yellow {
-   background-color: yellow;
-   position: absolute;
-   width: 1px;
-   height: 1px;
-   position: absolute;
-   left: 5%;
-}
+
 #mon-man {
   position: absolute;
   top: 0%;
   left: -35px;
   transform: rotate(90deg);
+}
+
+.out {
+   visibility: hidden;
+}
+
+.house-container {
+   position: absolute;
+   top: 130px;
+   left: 246px; 
+   width: 10px; 
+   height: 51px; 
+}
+
+.house-container div {
+   background-color: aqua;
+   width: 10px;
+   height: 10px;
+   margin-bottom: 4px;
 }
