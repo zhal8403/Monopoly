@@ -10,7 +10,6 @@ class Player
       this.jailed = false;
       this.getOutOfJail = false;
       this.jailTime = 0;
-      this.double = 0;
       this.sigma = "very";
   }
 }
@@ -33,9 +32,9 @@ class Property
   }
 }
 let turn =0;
-let double = 0;
 let house = 32;
 let hotel = 12;
+let double = 0;
 
 let player1 = new Player(1, "blue");
 let player2 = new Player(2, "red");
@@ -86,6 +85,11 @@ for (let i = 0; i < 28; i++)
 
 function move()
 {
+    if (double == 0)
+    {
+        turn++;
+    }
+    console.log(turn)
 
     document.getElementById("player1").style.backgroundColor = "#d1ecf1";
     document.getElementById("player2").style.backgroundColor = "#d1ecf1";
@@ -98,24 +102,19 @@ function move()
 
     document.getElementById("dice1").src = die1 + ".png";
     document.getElementById("dice2").src = die2 + ".png";
+    console.log("Die 1: " + die1 + " Die 2: " + die2);
 
     let current_player = player1;
-    if(turn % 4 == 0)
-        current_player = player1;
-    else if(turn % 4 == 1)
-        current_player = player2
+    if(turn % 4 == 1)
+        current_player = player1
     else if(turn % 4 == 2)
-        current_player = player3
+        current_player = player2
     else if(turn % 4 == 3)
+        current_player = player3
+    else if(turn % 4 == 0)
         current_player = player4
 
     document.getElementById("player" + current_player.playerNum).style.backgroundColor = "#AAAAFF";
-
-    if(current_player.double == 0)
-    {
-        turn++;
-    }
-    console.log(turn)
 
     if (current_player.jailed)
     {
@@ -125,6 +124,7 @@ function move()
             console.log(current_player.jailTime)
             if(current_player.jailTime < 4)
             {
+                turn++;
                 return 0;
             }
             else
@@ -158,19 +158,20 @@ function move()
 
     if (die1 == die2)
     {
-        current_player.double++;
-        console.log("double" + current_player.double)
-        if (current_player.double == 3)
+        double++;
+        console.log("double" + double)
+        if (double == 3)
             {
                 current_player.jailed = true;
                 alert("Three double rolls is illegal")
                 current_player.position = 11;
                 document.getElementById("id" + current_player.position).appendChild(document.getElementById(current_player.color));
-                current_player.double = 0;
+                double = 0;
             }
         return 0;
     }
-    current_player.double = 0;
+
+    double = 0;
 }
 
 function penalties(player)
@@ -201,6 +202,7 @@ function penalties(player)
   {
       rent(player);
   }
+
   if(player.position == 31)
   {
       if (!player.getOutOfJail)
@@ -278,13 +280,20 @@ function rent(player) {
         }
 
         let rentAmount = 0;
-        if (count == 1) {
+        if (count == 1) 
+        {
             rentAmount = 25;
-        } else if (count == 2) {
+        } 
+        else if (count == 2) 
+        {
             rentAmount = 50;
-        } else if (count == 3) {
+        } 
+        else if (count == 3) 
+        {
             rentAmount = 100;
-        } else if (count == 4) {
+        } 
+        else if (count == 4) 
+        {
             rentAmount = 200;
         }
 
