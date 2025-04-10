@@ -1,17 +1,18 @@
 class Player
 {
-  constructor(playerNum, color)
-  {
-      this.playerNum = playerNum;
-      this.properties = [];
-      this.balance = 1500;
-      this.position = 1;
-      this.color = color;
-      this.jailed = false;
-      this.getOutOfJail = false;
-      this.jailTime = 0;
-      this.sigma = "very";
-  }
+    constructor(playerNum, color)
+    {
+        this.playerNum = playerNum;
+        this.properties = [];
+        this.balance = 1500;
+        this.position = 1;
+        this.color = color;
+        this.jailed = false;
+        this.getOutOfJail = false;
+        this.jailTime = 0;
+        this.dub = false;
+        this.sigma = "very";
+    }
 }
 
 class Property
@@ -176,49 +177,49 @@ function move()
 
 function penalties(player)
 {
-  if (player.position == 5)
-  {
-      player.balance -= 200;
-      updateBalances(player)
-  }
+    if(player.position === 3 || player.position === 13 || player.position === 33)
+    {
+        community_chest(player)
+    }
+    
+    if(player.position === 8 || player.position === 23 || player.position === 37)
+    {
+        chance(player)
+    }
 
-  if (player.position == 39)
-  {
-      player.balance -= 75;
-      updateBalances(player)
-  }
+    if (player.position == 5)
+    {
+        player.balance -= 200;
+        updateBalances(player)
+    }
 
-  if(player.position == 3 || player.position == 13 || player.position == 33)
-  {
-      community_chest(player)
-  }
+    if (player.position == 39)
+    {
+        player.balance -= 75;
+        updateBalances(player)
+    }
+    
+    if (!player.properties.includes(properties[player.position]))
+    {
+        rent(player);
+    }
 
-  if(player.position == 8 || player.position == 23 || player.position == 37)
-  {
-      chance(player)
-  }
- 
-  if (!player.properties.includes(properties[player.position]))
-  {
-      rent(player);
-  }
-
-  if(player.position == 31)
-  {
-      if (!player.getOutOfJail)
-          {
-          alert("You were Arrested");
-          player.jailed = true;
-          player.jailTime = 0;
-          player.position = 11;
-          document.getElementById("id" + player.position).appendChild(document.getElementById(player.color));
-      }
-      else
-      {
-          alert("You went to jail, but used your get out of jail free card");
-          player.getOutOfJail = false;
-      }
-  }
+    if(player.position === 31)
+    {
+        if (!player.getOutOfJail)
+            {
+            alert("You were Arrested");
+            player.jailed = true;
+            player.jailTime = 0;
+            player.position = 11;
+            document.getElementById("id" + player.position).appendChild(document.getElementById(player.color));
+        }
+        else
+        {
+            alert("You went to jail, but used your get out of jail free card");
+            player.getOutOfJail = false;
+        }
+    }
 }
 
 function rent(player) {
@@ -297,12 +298,19 @@ function rent(player) {
             rentAmount = 200;
         }
 
+        if (player.dub)
+        {
+            rentAmount = rentAmount * 2;
+        }
+
         player.balance -= rentAmount;
         owner.balance += rentAmount;
 
         console.log("railroad rent: " + rentAmount);
         updateBalances(player);
         updateBalances(owner);
+
+        player.dub = false;
     }
     function utility(player, owner){
         let count = 0;
@@ -313,17 +321,28 @@ function rent(player) {
         }
         let u1 = Math.floor(Math.random() * 6) + 1;
         let u2 = Math.floor(Math.random() * 6) + 1;
+        let rentAmount = 0;
         if (count == 1)
         {
-            player.balance -= (u1 + u2) * 4;
+            rentAmount = (u1 + u2) * 4;
             console.log("utility rent: " + (u1 + u2) * 4)
         }
         else if (count == 2)
         {
-            player.balance -= (u1 + u2) * 10;
+            rentAmount = (u1 + u2) * 10;
             console.log("utility rent: " + (u1 + u2) * 10)
         }
+
+        if (player.dub)
+        {
+            rentAmount = rentAmount * 2;
+        }
+
+        player.balance -= rentAmount;
+        owner.balance -= rentAmount;
         updateBalances(player);
+
+        player.dub = false;
     }
 }
 
@@ -486,109 +505,126 @@ function community_chest(player) {
 }
 
 function chance(player) {
-  let num = Math.floor(Math.random() * 10);
-  let players = [player1, player2, player3, player4]
-  switch (num) {
-      case 0:
-          alert("Advance to Go: Collect $200");
-          player.position = 1;
-          player.balance += 200;
-          document.getElementById("id" + player.position).appendChild(document.getElementById(player.color));
-          break;
-      case 1:
-          alert("Advance to Illinois Avenue");
-          player.position = 25;
-          document.getElementById("id" + player.position).appendChild(document.getElementById(player.color));
-          break;
-      case 2:
-          alert("Advance to St. Charles Place");
-          player.position = 12;
-          document.getElementById("id" + player.position).appendChild(document.getElementById(player.color));
-          break;
-      case 3:
-          alert("Advance to the nearest Railroad and pay double if owned");
-          if (player.position == 37)
-          {
-              player.position = 36;
-              document.getElementById("id" + player.position).appendChild(document.getElementById(player.color));
-          }
-          else if(player.position == 23)
-          {
-              player.position = 26;
-              document.getElementById("id" + player.position).appendChild(document.getElementById(player.color));
-          }
-          else if(player.position == 8)
-          {
-              player.position = 6;
-              document.getElementById("id" + player.position).appendChild(document.getElementById(player.color));
-          }
-          break;
-      case 4:
-          alert("Advance to nearest Utility and pay double if owned");
-          if (player.position == 23 || player.position == 8)
-          {
-              player.position = 19;
-              document.getElementById("id" + player.position).appendChild(document.getElementById(player.color));
-          }
-          else if (player.position == 37)
-          {
-              player.position = 29;
-              document.getElementById("id" + player.position).appendChild(document.getElementById(player.color));
-          }
-          break;
-      case 5:
-          alert("Bank pays you a dividend of $50");
-          player.balance += 50;
-          break;
-      case 6:
-          alert("Get Out of Jail Free Card");
-          player.getOutOfJail = true;
-          break;
-      case 7:
-          alert("Go Back Three Spaces");
-          player.position = (player.position - 3 )
-          document.getElementById("id" + player.position).appendChild(document.getElementById(player.color));
-          player.position =player.position - 3;
-          break;
-      case 8:
-          if (!player.getOutOfJail)
-          {
-              alert("You are Arrested");
-              player.jailed = true;
-              player.jailTime = 0;
-              player.position = 11;
-              document.getElementById("id" + player.position).appendChild(document.getElementById(player.color));
-          }
-          else
-          {
-              alert("You went to jail, but used your get out of jail free card");
-              player.getOutOfJail = false;
-          }
-          break;
-      case 9:
-          alert("You have been elected Chairman of the Board. Pay each player $50.");
-          player.balance -= 150;
-          for (let i = 0; i < 4; i++) {
-              if(players[i] != player)
-              {
-                  players[1].balance += 50;
-              }
-          }
-          break;
-  }
-  updateBalances(player);
+    let num = Math.floor(Math.random() * 10);
+    let players = [player1, player2, player3, player4]
+    switch (num) {
+        case 0:
+            alert("Advance to Go: Collect $200");
+            player.position = 1;
+            player.balance += 200;
+            document.getElementById("id" + player.position).appendChild(document.getElementById(player.color));
+            break;
+        case 1:
+            alert("Advance to Illinois Avenue");
+            player.position = 25;
+            document.getElementById("id" + player.position).appendChild(document.getElementById(player.color));
+            break;
+        case 2:
+            alert("Advance to St. Charles Place");
+            player.position = 12;
+            document.getElementById("id" + player.position).appendChild(document.getElementById(player.color));
+            break;
+        case 3:
+            alert("Advance to the nearest Railroad and pay double if owned");
+            if (player.position == 37)
+            {
+                player.position = 36;
+                document.getElementById("id" + player.position).appendChild(document.getElementById(player.color));
+            }
+            else if(player.position == 23)
+            {
+                player.position = 26;
+                document.getElementById("id" + player.position).appendChild(document.getElementById(player.color));
+            }
+            else if(player.position == 8)
+            {
+                player.position = 6;
+                document.getElementById("id" + player.position).appendChild(document.getElementById(player.color));
+            }
+            player.dub == true;
+            break;
+        case 4:
+            alert("Advance to nearest Utility and pay double if owned");
+            if (player.position == 23 || player.position == 8)
+            {
+                player.position = 19;
+                document.getElementById("id" + player.position).appendChild(document.getElementById(player.color));
+            }
+            else if (player.position == 37)
+            {
+                player.position = 29;
+                document.getElementById("id" + player.position).appendChild(document.getElementById(player.color));
+            }
+            player.dub == true;
+            break;
+        case 5:
+            alert("Bank pays you a dividend of $50");
+            player.balance += 50;
+            break;
+        case 6:
+            alert("Get Out of Jail Free Card");
+            player.getOutOfJail = true;
+            break;
+        case 7:
+            alert("Go Back Three Spaces");
+            player.position = (player.position - 3 )
+            document.getElementById("id" + player.position).appendChild(document.getElementById(player.color));
+            player.position =player.position - 3;
+            break;
+        case 8:
+            if (!player.getOutOfJail)
+            {
+                alert("You are Arrested");
+                player.jailed = true;
+                player.jailTime = 0;
+                player.position = 11;
+                document.getElementById("id" + player.position).appendChild(document.getElementById(player.color));
+            }
+            else
+            {
+                alert("You went to jail, but used your get out of jail free card");
+                player.getOutOfJail = false;
+            }
+            break;
+        case 9:
+            alert("You have been elected Chairman of the Board. Pay each player $50.");
+            player.balance -= 150;
+            for (let i = 0; i < 4; i++) {
+                if(players[i] != player)
+                {
+                    players[1].balance += 50;
+                }
+            }
+            break;
+    }
+    updateBalances(player);
 }
 
-function updateBalances(player)
-{
-    document.getElementById("player1").innerHTML = "Player 1: $" + player1.balance;
-    document.getElementById("player2").innerHTML = "Player 2: $" + player2.balance;
-    document.getElementById("player3").innerHTML = "Player 3: $" + player3.balance;
-    document.getElementById("player4").innerHTML = "Player 4: $" + player4.balance;
+function updateBalances(player) {
+    document.getElementById("player1").innerHTML = "Player 1: $" + player1.balance + ' <img class="out" src="out.jpeg" alt="Out jail free" width="30px">';
+    document.getElementById("player2").innerHTML = "Player 2: $" + player2.balance + ' <img class="out" src="out.jpeg" alt="Out jail free" width="30px">';
+    document.getElementById("player3").innerHTML = "Player 3: $" + player3.balance + ' <img class="out" src="out.jpeg" alt="Out jail free" width="30px">';
+    document.getElementById("player4").innerHTML = "Player 4: $" + player4.balance + ' <img class="out" src="out.jpeg" alt="Out jail free" width="30px">';
 
-    if (player.balance < 1)
-    {
-        alert ("You have gone bankrupt your out");
+    const players = [player1, player2, player3, player4];
+    players.forEach((p, index) => 
+    { 
+        const img = document.querySelector(`#player${index + 1} .out`);
+        if (img) 
+        {
+            if (p.getOutOfJail) 
+            {
+                img.style.visibility = "visible";
+            } 
+            else 
+            {
+                img.style.visibility = "hidden";
+            }
+        }
+    });
+
+    if (player.balance < 1) {
+        alert("You have gone bankrupt, you're out!");
     }
 }
 
@@ -645,5 +681,40 @@ function buyHouse() {
         updateBalances(current_player);
         console.log(" bought " + properties[i].house);
 
+    }
+}
+
+function sell() {
+    let current_player = player1;
+    if (turn % 4 == 1)
+        current_player = player1;
+    else if (turn % 4 == 2)
+        current_player = player2;
+    else if (turn % 4 == 3)
+        current_player = player3;
+    else if (turn % 4 == 0)
+        current_player = player4;
+
+    for (let i = 0; i < properties.length; i++) {
+        if (!current_player.properties.includes(properties[i].position)) {
+            continue;
+        }
+        if (properties[i].color == null) {
+            continue;
+        }
+        if (properties[i].house > 0) {
+            properties[i].house--;
+            current_player.balance += properties[i].housePrice;
+            house++;
+            updateBalances(current_player);
+            console.log("Sold house on property " + properties[i].position);
+            return;
+        }
+        current_player.balance += properties[i].mortgage;
+        current_player.properties = current_player.properties.filter(pos => pos !== properties[i].position);
+        properties[i].owned = false;
+        updateBalances(current_player);
+        console.log("Sold property " + properties[i].position + " for " + properties[i].mortgage);
+        return;
     }
 }
