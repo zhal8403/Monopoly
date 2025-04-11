@@ -75,7 +75,7 @@
    border: 1px solid white;
    background-color: #d1ecf1;
    border-radius: 5px;
-   width: 75%;
+   width: 200px;
    font-weight: bold;
    cursor: pointer;
  }
@@ -86,20 +86,19 @@
  
  /* Styling for Player Names (non-button) */
  #player1, #player2, #player3, #player4 {
-   padding: 10px 20px;
+   padding: 10px;
    font-size: 1.2em;
    background-color: #d1ecf1;
    margin: 5px 0;
    border-radius: 5px;
    font-weight: bold;
    text-align: center;
+   width: 200px;
  }
  
  #player1:hover, #player2:hover, #player3:hover, #player4:hover {
    background-color: #e0f3f7;
  }
- 
-
 
 .dice-container {
    text-align: center;
@@ -126,10 +125,6 @@
   transform: rotate(90deg);
 }
 
-.out {
-   visibility: hidden;
-}
-
 .house-container {
    position: absolute;
    top: 130px;
@@ -143,4 +138,8 @@
    width: 10px;
    height: 10px;
    margin-bottom: 4px;
+}
+
+.out {
+   visibility: hidden;
 }
