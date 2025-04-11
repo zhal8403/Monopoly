@@ -695,26 +695,46 @@ function sell() {
     else if (turn % 4 == 0)
         current_player = player4;
 
-    for (let i = 0; i < properties.length; i++) {
+    for (let i = 0; i < current_player.properties.length; i++) 
+    {
         if (!current_player.properties.includes(properties[i].position)) {
             continue;
         }
-        if (properties[i].color == null) {
-            continue;
-        }
-        if (properties[i].house > 0) {
+        if (properties[i].house > 0) 
+        {
             properties[i].house--;
-            current_player.balance += properties[i].housePrice;
+            current_player.balance += properties[i].housePrice / 2;
             house++;
             updateBalances(current_player);
             console.log("Sold house on property " + properties[i].position);
-            return;
+            return 0;
         }
         current_player.balance += properties[i].mortgage;
         current_player.properties = current_player.properties.filter(pos => pos !== properties[i].position);
         properties[i].owned = false;
+
+        let spaceElement = document.getElementById("id" + properties[i].position);
+        if (spaceElement) 
+        {
+            if (spaceElement.classList.contains("left")) 
+            {
+                spaceElement.style.borderLeft = "none";
+            } 
+            else if (spaceElement.classList.contains("right")) 
+            {
+                spaceElement.style.borderLeft = "none";
+            } 
+            else if (spaceElement.classList.contains("top")) 
+            {
+                spaceElement.style.borderTop = "none";
+            } 
+            else if (spaceElement.classList.contains("bottom")) 
+            {
+                spaceElement.style.borderBottom = "none";
+            }
+        }
         updateBalances(current_player);
         console.log("Sold property " + properties[i].position + " for " + properties[i].mortgage);
-        return;
+        return 0;
     }
 }
