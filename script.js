@@ -715,57 +715,93 @@ function buyHouse() {
 
 function sell() {
     let current_player = player1;
-    if (turn % 4 == 1)
+    if (turn % 4 == 1) {
         current_player = player1;
-    else if (turn % 4 == 2)
+    } 
+    else if (turn % 4 == 2) {
         current_player = player2;
-    else if (turn % 4 == 3)
+    } 
+    else if (turn % 4 == 3) {
         current_player = player3;
-    else if (turn % 4 == 0)
+    } 
+    else if (turn % 4 == 0) {
         current_player = player4;
+    }
 
     let box = document.querySelector('#sell-background');
     box.style.display = "block";
 
-    for (let i = 0; i < current_player.properties.length; i++) {
-        let propertyPosition = current_player.properties[i];
-        let property = properties.find(p => p.position === propertyPosition);
-        if (!property) continue;
+    let list = document.getElementById('sell-datalist');
+    list.innerHTML = current_player.properties
+        .map(pos => `<option value="${pos}">Property ${pos}</option>`)
+        .join('');
 
-        // Sell houses first
-        if (property.house > 0) {
-            property.house--;
-            current_player.balance += property.housePrice / 2;
-            house++;
-            updateBalances(current_player);
-            console.log("Sold house on property " + property.position);
-            return; // Exit after selling one house
-        }
+    let submit = document.getElementById('submit');
+    let cancel = document.getElementById('cancel');
 
-        // Sell the property
-        current_player.balance += property.mortgage;
-        current_player.properties = current_player.properties.filter(pos => pos !== property.position);
-        property.owned = false;
-
-        let spaceElement = document.getElementById("id" + property.position);
-        if (spaceElement) {
-            if (spaceElement.classList.contains("left")) {
-                spaceElement.style.borderLeft = `1px solid black`;
-            } 
-            else if (spaceElement.classList.contains("right")) {
-                spaceElement.style.borderRight = `1px solid black`;
-            } 
-            else if (spaceElement.classList.contains("top")) {
-                spaceElement.style.borderTop = `1px solid black`;
-            } 
-            else if (spaceElement.classList.contains("bottom")) {
-                spaceElement.style.borderBottom = `1px solid black`;
-            }
-        }
-        updateBalances(current_player);
-        console.log("Sold property " + property.position + " for " + property.mortgage);
+    cancel.onclick = () => {
         return;
     }
+
+    submit.onclick = () => {
+        let selectedProperty = parseInt(document.getElementById('sell-datalist').value);
+        let selectedOption = document.querySelector('input[name="to-sell"]:checked');
+
+        if (!selectedProperty || !selectedOption) {
+            alert("Please select a property and an option to sell.");
+            return;
+        }
+
+        let property = properties.find(p => p.position === selectedProperty);
+        if (!property) {
+            alert("Invalid property selected.");
+            return;
+        }
+
+        let sellType = selectedOption.value; // 1-5 for houses, 6 for property
+        if (sellType == 6) {
+            // Sell the entire property
+            if (property.house > 0) {
+                house += property.house; // Return houses to the pool
+                current_player.balance += (property.housePrice / 2) * property.house;
+                property.house = 0;
+            }
+            current_player.balance += property.mortgage;
+            current_player.properties = current_player.properties.filter(pos => pos !== property.position);
+            property.owned = false;
+
+            let spaceElement = document.getElementById("id" + property.position);
+            if (spaceElement) {
+                if (spaceElement.classList.contains("left")) {
+                    spaceElement.style.borderLeft = `1px solid black`;
+                } 
+                else if (spaceElement.classList.contains("right")) {
+                    spaceElement.style.borderRight = `1px solid black`;
+                } 
+                else if (spaceElement.classList.contains("top")) {
+                    spaceElement.style.borderTop = `1px solid black`;
+                } 
+                else if (spaceElement.classList.contains("bottom")) {
+                    spaceElement.style.borderBottom = `1px solid black`;
+                }
+            }
+            alert("Property sold successfully!");
+        } else {
+            // Sell houses/hotels
+            let housesToSell = parseInt(sellType);
+            if (property.house < housesToSell) {
+                housesToSell = property.house; // Sell all available houses/hotels
+            }
+            house += housesToSell; // Return houses to the pool
+            current_player.balance += (property.housePrice / 2) * housesToSell;
+            property.house -= housesToSell;
+
+            alert(`Sold ${housesToSell} house(s)/hotel(s) successfully!`);
+        }
+
+        updateBalances(current_player);
+        box.style.display = "none";
+    };
 }
 
 function trade() {
@@ -787,8 +823,9 @@ function trade() {
         current_player = player4;
         name = "player 4";
     }
-
+    
     let person = prompt("Trade with player 1, 2, 3, or 4?");
+
     if (person < 1 || person > 4 || person == current_player.playerNum) {
         alert("Invalid player number");
         return;
@@ -805,7 +842,6 @@ function trade() {
     let list1 = document.getElementById('box1-datalist');
     let list2 = document.getElementById('box2-datalist');
 
-    // Populate property lists for both players
     list1.innerHTML = current_player.properties
         .map(pos => `<option value="${pos}">Property ${pos}</option>`)
         .join('');
