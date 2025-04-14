@@ -18,9 +18,9 @@ class Player
 
 class Property
 {
-  constructor(position, price, rents, housePrice, mortgage, color)
+  constructor(position, price, rents, housePrice, mortgage, color, propertyNames)
   {
-      this.owned = null;
+      this.whoOwned = null;
       this.type = "property";
       this.price = price;
       this.position = position;
@@ -31,6 +31,7 @@ class Property
       this.house = 0;
       this.color = color;
       this.monopoly = false;
+      this.propertyNames = propertyNames;
   }
 }
 let turn =0;
@@ -48,6 +49,36 @@ let position = [2, 4, 6, 7, 9, 10, 12, 14, 15, 16, 17, 18, 19, 20, 22, 24, 25, 2
 let mortgage = [30, 30, 100, 50, 50, 60, 70, 70, 80, 100, 90, 90, 75, 100, 110, 110, 120, 130, 100, 130, 140, 75, 150, 150, 160, 100, 175, 200];
 let housePrices = [50, 50, -1, 50, 50, 50, 100, 100, 100, -1, 100, 100, -1, 100, 150, 150, 150, -1, 150, 150, -1, 150, 200, 200, 200, -1, 200, 200];
 let color = ["violet", "violet", null, "indigo", "indigo", "indigo", "pink", "pink", "pink", null, "orange", "orange", null, "orange", "red", "red", "red", null, "yellow", "yellow", null, "yellow", "green", "green", "green", null, "blue", "blue"]
+let propertyNames = [
+    "Mediterranean Avenue",
+    "Baltic Avenue",
+    "Reading Railroad",
+    "Oriental Avenue",
+    "Vermont Avenue",
+    "Connecticut Avenue",
+    "St. Charles Place",
+    "States Avenue",
+    "Virginia Avenue",
+    "Pennsylvania Railroad",
+    "St. James Place",
+    "Tennessee Avenue",
+    "Electric Company",
+    "New York Avenue",
+    "Kentucky Avenue",
+    "Indiana Avenue",
+    "Illinois Avenue",
+    "B&O Railroad",
+    "Atlantic Avenue",
+    "Ventnor Avenue",
+    "Water Works",
+    "Marvin Gardens",
+    "Pacific Avenue",
+    "North Carolina Avenue",
+    "Pennsylvania Avenue",
+    "Short Line Railroad",
+    "Park Place",
+    "Boardwalk"
+];  
 let rents = [
     [2, 10, 30, 90, 160, 250], // Mediterranean Avenue
     [4, 20, 60, 180, 320, 450], // Baltic Avenue
@@ -82,7 +113,7 @@ let properties = [];
 
 for (let i = 0; i < 28; i++)
 {
-  properties.push(new Property(position[i], price[i], rents[i][0], housePrices[i], mortgage[i], color[i]));
+  properties.push(new Property(position[i], price[i], rents[i][0], housePrices[i], mortgage[i], color[i], propertyNames[i]));
 }
 
 function move()
@@ -90,7 +121,7 @@ function move()
     if (double == 0)
     {
         turn++;
-        document.getElementById("box").innerHTML = "";
+        document.getElementById("message").innerHTML = "";
     }
     console.log(turn)
 
@@ -139,7 +170,7 @@ function move()
             {
                 current_player.balance -= 50;
                 updateBalances(current_player);
-                document.getElementById("box").innerHTML = "You paid $50 to get out of jail";
+                document.getElementById("message").innerHTML = "You paid $50 to get out of jail";
                 current_player.jailed = false;
             }
         }
@@ -171,7 +202,7 @@ function move()
         if (double == 3)
             {
                 current_player.jailed = true;
-                document.getElementById("box").innerHTML = "Three double rolls is illegal"
+                document.getElementById("message").innerHTML = "Three double rolls is illegal"
                 current_player.position = 11;
                 document.getElementById("id" + current_player.position).appendChild(document.getElementById(current_player.color));
                 double = 0;
@@ -215,7 +246,7 @@ function penalties(player)
     {
         if (!player.getOutOfJail)
             {
-            document.getElementById("box").innerHTML = "You were Arrested";
+            document.getElementById("message").innerHTML = "You were Arrested";
             player.jailed = true;
             player.jailTime = 0;
             player.position = 11;
@@ -223,7 +254,7 @@ function penalties(player)
         }
         else
         {
-            document.getElementById("box").innerHTML = "You went to jail, but used your get out of jail free card";
+            document.getElementById("message").innerHTML = "You went to jail, but used your get out of jail free card";
             player.getOutOfJail = false;
         }
     }
@@ -376,7 +407,7 @@ function buy()
         }
         if (current_player.balance < properties[i].price)
         {
-            document.getElementById("box").innerHTML = "Insufficient funds";
+            document.getElementById("message").innerHTML = "Insufficient funds";
             continue;
         }
         if (properties[i].position == 6 || properties[i].position == 16 || properties[i].position == 26 || properties[i].position == 36)
@@ -445,29 +476,29 @@ function community_chest(player) {
     switch (num)
     {
         case 0:
-            document.getElementById("box").innerHTML = "Advance to Go: Collect $200";
+            document.getElementById("message").innerHTML = "Advance to Go: Collect $200";
             player.position = 1;
             document.getElementById("id" + player.position).appendChild(document.getElementById(player.color));
             player.balance += 200;
             break;
         case 1:
-            document.getElementById("box").innerHTML = "Bank error: Collect $200";
+            document.getElementById("message").innerHTML = "Bank error: Collect $200";
             player.balance += 200;
             break;
         case 2:
-            document.getElementById("box").innerHTML = "Insurance Denied Your Claim: Pay $50";
+            document.getElementById("message").innerHTML = "Insurance Denied Your Claim: Pay $50";
             player.balance -= 50;
             break;
         case 3:
-            document.getElementById("box").innerHTML = "You sold Stock and Earned $50";
+            document.getElementById("message").innerHTML = "You sold Stock and Earned $50";
             player.balance += 50;
             break;
         case 4:
-            document.getElementById("box").innerHTML = "Tax Fund: Gain $50";
+            document.getElementById("message").innerHTML = "Tax Fund: Gain $50";
             player.balance += 50;
             break;
         case 5:
-            document.getElementById("box").innerHTML = "It's your Birthday, Collect $10 from Every Player";
+            document.getElementById("message").innerHTML = "It's your Birthday, Collect $10 from Every Player";
             player.balance += 30;
             for (let i = 0; i < 4; i++) {
                 if(players[i] != player)
@@ -477,21 +508,21 @@ function community_chest(player) {
             }
             break;
         case 6:
-            document.getElementById("box").innerHTML = "Life Insurance Claim: Gain $100";
+            document.getElementById("message").innerHTML = "Life Insurance Claim: Gain $100";
             player.balance += 100;
             break;
         case 7:
-            document.getElementById("box").innerHTML = "Pay School Fees, Pay $50";
+            document.getElementById("message").innerHTML = "Pay School Fees, Pay $50";
             player.balance -= 50;
             break;
         case 8:
-            document.getElementById("box").innerHTML = "You Inherit $100";
+            document.getElementById("message").innerHTML = "You Inherit $100";
             player.balance += 100;
             break;
         case 9:
             if (!player.getOutOfJail)
             {
-                document.getElementById("box").innerHTML = "You are Arrested";
+                document.getElementById("message").innerHTML = "You are Arrested";
                 player.jailed = true;
                 player.jailTime = 0;
                 player.position = 11;
@@ -499,7 +530,7 @@ function community_chest(player) {
             }
             else
             {
-                document.getElementById("box").innerHTML = "You went to jail, but used your get out of jail free card";
+                document.getElementById("message").innerHTML = "You went to jail, but used your get out of jail free card";
                 player.getOutOfJail = false;
             }
             break;
@@ -512,23 +543,23 @@ function chance(player) {
     let players = [player1, player2, player3, player4]
     switch (num) {
         case 0:
-            document.getElementById("box").innerHTML = "Advance to Go: Collect $200";
+            document.getElementById("message").innerHTML = "Advance to Go: Collect $200";
             player.position = 1;
             player.balance += 200;
             document.getElementById("id" + player.position).appendChild(document.getElementById(player.color));
             break;
         case 1:
-            document.getElementById("box").innerHTML = "Advance to Illinois Avenue";
+            document.getElementById("message").innerHTML = "Advance to Illinois Avenue";
             player.position = 25;
             document.getElementById("id" + player.position).appendChild(document.getElementById(player.color));
             break;
         case 2:
-            document.getElementById("box").innerHTML = "Advance to St. Charles Place";
+            document.getElementById("message").innerHTML = "Advance to St. Charles Place";
             player.position = 12;
             document.getElementById("id" + player.position).appendChild(document.getElementById(player.color));
             break;
         case 3:
-            document.getElementById("box").innerHTML = "Advance to the nearest Railroad and pay double if owned";
+            document.getElementById("message").innerHTML = "Advance to the nearest Railroad and pay double if owned";
             if (player.position == 37)
             {
                 player.position = 36;
@@ -547,7 +578,7 @@ function chance(player) {
             player.dub == true;
             break;
         case 4:
-            document.getElementById("box").innerHTML = "Advance to nearest Utility and pay double if owned";
+            document.getElementById("message").innerHTML = "Advance to nearest Utility and pay double if owned";
             if (player.position == 23 || player.position == 8)
             {
                 player.position = 19;
@@ -561,15 +592,15 @@ function chance(player) {
             player.dub == true;
             break;
         case 5:
-            document.getElementById("box").innerHTML = "Bank pays you a dividend of $50";
+            document.getElementById("message").innerHTML = "Bank pays you a dividend of $50";
             player.balance += 50;
             break;
         case 6:
-            document.getElementById("box").innerHTML = "Get Out of Jail Free Card";
+            document.getElementById("message").innerHTML = "Get Out of Jail Free Card";
             player.getOutOfJail = true;
             break;
         case 7:
-            document.getElementById("box").innerHTML = "Go Back Three Spaces";
+            document.getElementById("message").innerHTML = "Go Back Three Spaces";
             player.position = (player.position - 3 )
             document.getElementById("id" + player.position).appendChild(document.getElementById(player.color));
             player.position =player.position - 3;
@@ -577,7 +608,7 @@ function chance(player) {
         case 8:
             if (!player.getOutOfJail)
             {
-                document.getElementById("box").innerHTML = "You are Arrested";
+                document.getElementById("message").innerHTML = "You are Arrested";
                 player.jailed = true;
                 player.jailTime = 0;
                 player.position = 11;
@@ -585,12 +616,12 @@ function chance(player) {
             }
             else
             {
-                document.getElementById("box").innerHTML = "You went to jail, but used your get out of jail free card";
+                document.getElementById("message").innerHTML = "You went to jail, but used your get out of jail free card";
                 player.getOutOfJail = false;
             }
             break;
         case 9:
-            document.getElementById("box").innerHTML = "You have been elected Chairman of the Board. Pay each player $50.";
+            document.getElementById("message").innerHTML = "You have been elected Chairman of the Board. Pay each player $50.";
             player.balance -= 150;
             for (let i = 0; i < 4; i++) {
                 if(players[i] != player)
@@ -627,7 +658,7 @@ function updateBalances(player) {
     });
 
     if (player.balance < 1) {
-        document.getElementById("box").innerHTML = "You have gone bankrupt, you're out!";
+        document.getElementById("message").innerHTML = "You have gone bankrupt, you're out!";
         player.out = true;
     }
 }
@@ -674,7 +705,7 @@ function buyHouse() {
         } 
         else 
         {
-            document.getElementById("box").innerHTML = "No more houses or hotels are available.";
+            document.getElementById("message").innerHTML = "No more houses or hotels are available.";
         }
         updateBalances(current_player);
         console.log(`Bought house/hotel on property ${properties[i].position}`);
@@ -692,6 +723,9 @@ function sell() {
         current_player = player3;
     else if (turn % 4 == 0)
         current_player = player4;
+
+    let box = document.querySelector('#sell-background');
+    box.style.display = "block";
 
     for (let i = 0; i < current_player.properties.length; i++) {
         let propertyPosition = current_player.properties[i];
@@ -731,5 +765,127 @@ function sell() {
         updateBalances(current_player);
         console.log("Sold property " + property.position + " for " + property.mortgage);
         return;
+    }
+}
+
+function trade() {
+    let current_player = player1;
+    let name = null;
+    if (turn % 4 == 1) {
+        current_player = player1;
+        name = "player 1";
+    } 
+    else if (turn % 4 == 2) {
+        current_player = player2;
+        name = "player 2";
+    } 
+    else if (turn % 4 == 3) {
+        current_player = player3;
+        name = "player 3";
+    } 
+    else if (turn % 4 == 0) {
+        current_player = player4;
+        name = "player 4";
+    }
+
+    let person = prompt("Trade with player 1, 2, 3, or 4?");
+    if (person < 1 || person > 4 || person == current_player.playerNum) {
+        alert("Invalid player number");
+        return;
+    }
+
+    let other_player = [player1, player2, player3, player4][person - 1];
+
+    let box = document.querySelector('#trade-background');
+    box.style.display = "block";
+
+    document.getElementById("b2h").innerHTML = "player " + person;
+    document.getElementById("b1h").innerHTML = name;
+
+    let list1 = document.getElementById('box1-datalist');
+    let list2 = document.getElementById('box2-datalist');
+
+    // Populate property lists for both players
+    list1.innerHTML = current_player.properties
+        .map(pos => `<option value="${pos}">Property ${pos}</option>`)
+        .join('');
+    list2.innerHTML = other_player.properties
+        .map(pos => `<option value="${pos}">Property ${pos}</option>`)
+        .join('');
+
+    let submit1 = document.getElementById('submit1');
+    let submit2 = document.getElementById('submit2');
+
+    let currentPlayerAgreed = false;
+    let otherPlayerAgreed = false;
+
+    submit1.onclick = () => {
+        currentPlayerAgreed = true;
+        checkTradeAgreement();
+    };
+
+    submit2.onclick = () => {
+        otherPlayerAgreed = true;
+        checkTradeAgreement();
+    };
+
+    function checkTradeAgreement() {
+        if (currentPlayerAgreed && otherPlayerAgreed) {
+
+            let selectedProperty1 = parseInt(document.getElementById('box1-datalist').value);
+            let selectedProperty2 = parseInt(document.getElementById('box2-datalist').value);
+
+            if (!selectedProperty1 || !selectedProperty2) {
+                alert("Both players must select a property to trade.");
+                return;
+            }
+
+            current_player.properties = current_player.properties.filter(pos => pos !== selectedProperty1);
+            other_player.properties = other_player.properties.filter(pos => pos !== selectedProperty2);
+
+            current_player.properties.push(selectedProperty2);
+            other_player.properties.push(selectedProperty1);
+
+            properties.find(p => p.position === selectedProperty1).whoOwned = other_player;
+            properties.find(p => p.position === selectedProperty2).whoOwned = current_player;
+
+            let spaceElement1 = document.getElementById("id" + selectedProperty1);
+            if (spaceElement1) {
+                if (spaceElement1.classList.contains("left")) {
+                    spaceElement1.style.borderLeft = `5px solid ${other_player.color}`;
+                } 
+                else if (spaceElement1.classList.contains("right")) {
+                    spaceElement1.style.borderLeft = `5px solid ${other_player.color}`;
+                } 
+                else if (spaceElement1.classList.contains("top")) {
+                    spaceElement1.style.borderTop = `5px solid ${other_player.color}`;
+                } 
+                else if (spaceElement1.classList.contains("bottom")) {
+                    spaceElement1.style.borderBottom = `5px solid ${other_player.color}`;
+                }
+            }
+
+            let spaceElement2 = document.getElementById("id" + selectedProperty2);
+            if (spaceElement2) {
+                if (spaceElement2.classList.contains("left")) {
+                    spaceElement2.style.borderLeft = `5px solid ${current_player.color}`;
+                } 
+                else if (spaceElement2.classList.contains("right")) {
+                    spaceElement2.style.borderLeft = `5px solid ${current_player.color}`;
+                } 
+                else if (spaceElement2.classList.contains("top")) {
+                    spaceElement2.style.borderTop = `5px solid ${current_player.color}`;
+                } 
+                else if (spaceElement2.classList.contains("bottom")) {
+                    spaceElement2.style.borderBottom = `5px solid ${current_player.color}`;
+                }
+            }
+
+            alert("Trade completed successfully!");
+            box.style.display = "none";
+
+            currentPlayerAgreed = false;
+            otherPlayerAgreed = false;
+        }
     }
 }
