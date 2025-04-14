@@ -3,7 +3,7 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Monopoly with Dice</title>
+   <title>Monopoly</title>
    <link rel="stylesheet" href="styles.css">
    <link rel="stylesheet" href="prop.css">
 </head>
@@ -12,7 +12,7 @@
    <div class="container">
 
        <!-- Monopoly Board -->
-       <div class="grid" id="board">
+        <div class="grid" id="board">
             <div class="corner" id="id1"><div class="player1" id="blue"></div><div class="player2" id="red"></div><div class="player3" id="green"></div><div class="player4" id="yellow"></div><img src="go.png" alt="GO" width="92px"></div>
             <div class="top" id="id2"><span>MEDITER- RANEAN AVENUE <br> <br> <br>$60</span></div>
             <div class="top" id="id3"><span>COMMUNITY CHEST <img src="cc.png" alt="CC"></span></div>
@@ -65,7 +65,31 @@
             <div class="bottom" id="id23"><span>CHANCE <img src="chance.png" alt="chance" width="57px"></span></div>
             <div class="bottom" id="id22"><span>KENTUCKY AVENUE <br> <br> <br> <br> ₩220</span></div>
             <div class="corner" id="id21"><img src="park.png" alt="Free Parking" width="92px"></div> 
-       </div>
+        
+            <div id ="trade-background">
+                <div id="box">
+                    <div id="box1">
+                        <h3 id="b1h">Player 1</h3>
+                        <select id="box1-datalist"></select>
+                        <button id="submit1">Submit</button>
+                    </div>
+                    <div id="box2">
+                        <h3 id="b2h">Player 2</h3>
+                        <select id="box2-datalist"></select>
+                        <button id="submit2">Submit</button>
+                    </div>
+                </div>
+            </div>
+        
+            <div id="sell-background">
+                <div id="sell-box">
+                    <h3 id="b1h">Sell Property</h3>
+                    <select id="sell-datalist"></select>
+                    <br>
+                    <button id="submit1">Submit</button>
+                </div>
+            </div>
+        </div>
 
        <div class="side-bar">
             <div class="balances">
@@ -75,7 +99,8 @@
                 <div id="player3">Player 3: $1500 <img class="out" src="out.jpeg" alt="Out jail free" width="30px"></div>
                 <div id="player4">Player 4: $1500 <img class="out" src="out.jpeg" alt="Out jail free" width="30px"></div>
                 <br>
-                <div id="box"></div>
+
+                <div id="message"></div>
             </div>
             
             <div class="actions">
