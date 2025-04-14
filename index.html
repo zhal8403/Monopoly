@@ -9,9 +9,8 @@
 </head>
 <body>
 
-   <div class="container">
-
-       <!-- Monopoly Board -->
+    <div class="container">
+        <!-- Monopoly Board -->
         <div class="grid" id="board">
             <div class="corner" id="id1"><div class="player1" id="blue"></div><div class="player2" id="red"></div><div class="player3" id="green"></div><div class="player4" id="yellow"></div><img src="go.png" alt="GO" width="92px"></div>
             <div class="top" id="id2"><span>MEDITER- RANEAN AVENUE <br> <br> <br>$60</span></div>
@@ -83,15 +82,35 @@
         
             <div id="sell-background">
                 <div id="sell-box">
-                    <h3 id="b1h">Sell Property</h3>
+                    <h1 id="b1h">Sell Property</h1>
+                    <p>select number of house or property you wnat to sell</p>
+                    <div id="sell-choice">
+                        <input type="radio" id="1h" name="to-sell" value="1">
+                            <label for="to-sell">1 house</label>
+                        <input type="radio" id="2h" name="to-sell" value="2">
+                            <label for="to-sell">2 house</label>
+                        <input type="radio" id="3h" name="to-sell" value="3">
+                            <label for="to-sell">3 house</label>
+                        <br>
+                        <input type="radio" id="4h" name="to-sell" value="4">
+                            <label for="to-sell">4 house</label>
+                        <input type="radio" id="5h" name="to-sell" value="5">
+                            <label for="to-sell">hotel</label>
+                        <input type="radio" id="allh" name="to-sell" value="6">
+                            <label for="to-sell">propery</label> 
+                    </div>
+                    <br>
+                    <p>Select propery</p>
                     <select id="sell-datalist"></select>
                     <br>
-                    <button id="submit1">Submit</button>
+                    <button id="submit">Submit</button>
+                    <br>
+                    <button id="cancel">cancel</button>
                 </div>
             </div>
         </div>
 
-       <div class="side-bar">
+        <div class="side-bar">
             <div class="balances">
                 <h2>Player Balances</h2>
                 <div id="player1">Player 1: $1500 <img class="out" src="out.jpeg" alt="Out jail free" width="30px"></div>
@@ -116,10 +135,11 @@
                 <button id="sell" onclick="sell()">Sell Property</button>               
             </div>
         </div>
+        <div id="mon-man">
+            <img src="mon-man.png" alt="Monopoly man" width="80px">
+        </div>
+    </div>
 
-   <div id="mon-man">
-       <img src="mon-man.png" alt="Monopoly man" width="80px">
-   </div>
 
    <script src="script.js"></script>
 </body>
