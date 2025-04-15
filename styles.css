@@ -1,4 +1,3 @@
-/* Main layout container */
 .container {
    display: flex;
    flex-wrap: wrap;
@@ -7,7 +6,7 @@
    gap: 20px;
    padding: 20px;
 }
-/* Monopoly Board Grid */
+
 .grid {
    display: grid;
    width: 697px;
@@ -58,7 +57,7 @@
  }
 
  .balances {
-   height: 355px;
+   height: 680px;
  }
  
  /* Heading styling for Actions and Balances */
@@ -207,4 +206,52 @@
    background-color: white;
    border: black solid 2px;
    border-radius: 10px;
+}
+
+#card-out-border {
+   border: 3px solid black;
+   width: 191px;
+   height: 250px;
+   border-radius:1%;
+}
+
+#card-in-border {
+   border: 1px solid black;
+   width: 181px;
+   height: 240px;
+   border-radius:1%;
+   margin: auto;
+   margin-top: 4px;
+}
+
+#card-title-box {
+   text-align: center;
+   background-color: lightsteelblue;
+   width: 165px;
+   height: 50px;
+   margin-left: 7px;
+   margin-top: 5px;
+   border: 1px solid black;
+}
+
+#message-box {
+   height: 60px;
+   width: 220px;
+}
+
+#title-deed {
+   margin-top: auto;
+   font-size: 12px;
+}
+
+#card-title {
+   font-size: 1cqw;
+}
+
+#card-in-border p {
+   margin: auto;
+}
+
+#card-house {
+   text-align: left;
 }
