@@ -258,6 +258,12 @@ function penalties(player)
             player.getOutOfJail = false;
         }
     }
+
+    for (let i = 0; i < 40; i++) {
+        if(player.position === properties[i].position){
+            cardDisplay(properties[i]);
+        }
+    }
 }
 
 function rent(player) {
@@ -740,6 +746,7 @@ function sell() {
     let cancel = document.getElementById('cancel');
 
     cancel.onclick = () => {
+        box.style.display = "none";
         return;
     }
 
@@ -760,12 +767,13 @@ function sell() {
 
         let sellType = selectedOption.value; // 1-5 for houses, 6 for property
         if (sellType == 6) {
-            // Sell the entire property
+            
             if (property.house > 0) {
-                house += property.house; // Return houses to the pool
+                house += property.house; 
                 current_player.balance += (property.housePrice / 2) * property.house;
                 property.house = 0;
             }
+
             current_player.balance += property.mortgage;
             current_player.properties = current_player.properties.filter(pos => pos !== property.position);
             property.owned = false;
@@ -785,14 +793,16 @@ function sell() {
                     spaceElement.style.borderBottom = `1px solid black`;
                 }
             }
+
             alert("Property sold successfully!");
-        } else {
-            // Sell houses/hotels
+        } 
+        else {
             let housesToSell = parseInt(sellType);
             if (property.house < housesToSell) {
-                housesToSell = property.house; // Sell all available houses/hotels
+                housesToSell = property.house;
             }
-            house += housesToSell; // Return houses to the pool
+
+            house += housesToSell;
             current_player.balance += (property.housePrice / 2) * housesToSell;
             property.house -= housesToSell;
 
@@ -924,4 +934,8 @@ function trade() {
             otherPlayerAgreed = false;
         }
     }
+}
+
+function cardDisplay(prop) {
+    document.getElementById("card-title").innerHTML = prop.propertyNames;
 }
